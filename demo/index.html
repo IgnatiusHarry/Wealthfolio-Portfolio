@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthFolio Portfolio Demo</title>
+    <style>
+        :root {
+            --bg: #0f1115;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --accent: #6366f1;
+            --text-primary: #f1f5f9;
+            --text-muted: rgba(255, 255, 255, 0.4);
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container { width: 100%; max-width: 1000px; }
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 18px; padding: 20px; 
+            backdrop-filter: blur(10px);
+        }
+        .label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px;}
+        .value { font-size: 24px; font-weight: 800; }
+        .trend { font-size: 11px; margin-top: 5px; }
+        .trend.up { color: var(--success); }
+        .trend.down { color: var(--danger); }
+
+        /* AI WIDGET */
+        .ai-widget { background: rgba(99, 102, 241, 0.05); border: 1px solid rgba(99, 102, 241, 0.2); }
+        .ai-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .ai-icon { width: 30px; height: 30px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .progress-bar { height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .progress-fill { height: 100%; background: var(--success); width: 35%; }
+        .insight-card { background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px; margin-top: 10px; font-size: 12px; display: flex; gap: 10px; }
+        .insight-card.warning { border-left: 3px solid var(--danger); }
+        .insight-card.success { border-left: 3px solid var(--success); }
+        .insight-card.tip { border-left: 3px solid var(--accent); }
+
+        .disclaimer { font-size: 12px; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid rgba(245, 158, 11, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="disclaimer">⚠️ <b>DEMO ONLY:</b> All data shown below is fictional dummy data for portfolio demonstration purposes.</div>
+        
+        <header>
+            <div>
+                <h1 style="margin:0; font-size: 24px;">WealthFolio Dash</h1>
+                <p style="margin:5px 0 0; color: var(--text-muted); font-size: 12px;">Data Analysis & AI Showcase</p>
+            </div>
+            <div style="background: var(--card-bg); padding: 8px 15px; border-radius: 20px; font-size: 12px;">📍 Expat Base: Taipei, Taiwan</div>
+        </header>
+
+        <div class="grid">
+            <!-- TOTAL CASH -->
+            <div class="card">
+                <div class="label">Balance Summary</div>
+                <div class="value">NT$ 124,500</div>
+                <div class="trend up">↗️ +NT$ 8,200 this month</div>
+            </div>
+
+            <!-- SAVINGS RATE -->
+            <div class="card">
+                <div class="label">Savings Rate</div>
+                <div class="value">26.7%</div>
+                <div class="trend up">✅ 1.7% above target (25%)</div>
+            </div>
+
+            <!-- AI PULSE WIDGET -->
+            <div class="card ai-widget" style="grid-column: span 1.5;">
+                <div class="ai-header">
+                    <div class="ai-icon">🧠</div>
+                    <div>
+                        <div style="font-size: 13px; font-weight: 800;">Financial Pulse Intelligence</div>
+                        <div style="font-size: 9px; color: var(--text-muted);">Model: Quantfolio-GPT5-v2</div>
+                    </div>
+                </div>
+
+                <div class="label">🍱 Food Budget — NT$ 300 / Day</div>
+                <div style="font-family: monospace; font-size: 14px; margin-top: 5px;">🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜ 35%</div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div style="font-size: 12px;">Today: <b>NT$ 105</b> · Left: <b>NT$ 195</b></div>
+
+                <div class="insight-card warning">
+                    <span>📉</span>
+                    <span>Saturday food spend pattern is 22% higher than weekdays. Consider a meal plan for weekends.</span>
+                </div>
+                <div class="insight-card success">
+                    <span>🛡️</span>
+                    <span>Accumulated NT$ 1,840 buffer this month. You've been under budget 18 out of 21 days.</span>
+                </div>
+                <div class="insight-card tip">
+                    <span>💡</span>
+                    <span>Investment opportunity detected: Move NT$ 5,000 from cash savings to Portfolio (NVDA) for Q3 target.</span>
+                </div>
+            </div>
+
+            <!-- INVESTMENT PORTFOLIO -->
+            <div class="card">
+                <div class="label">Investment Portfolio</div>
+                <div class="value">NT$ 340,000</div>
+                <div class="trend up" style="color: var(--success); font-weight: 700;">↗️ +12.4% P&L (Unrealized)</div>
+                <div style="font-size: 11px; margin-top: 10px; color: var(--text-muted);">
+                    Holdings: NVDA, AAPL, 0050.TW
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; color: var(--text-muted); font-size: 11px;">
+            Built with Next.js 14 · Supabase · OpenClaw AI Gateway · Recharts
+        </div>
+    </div>
+</body>
+</html>
