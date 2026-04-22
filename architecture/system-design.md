@@ -36,7 +36,7 @@ graph TB
     end
 
     subgraph AILayer["🤖 AI Layer"]
-        PARSE[Transaction Parser<br/>GPT-4o / GPT-4o-mini]
+        PARSE[Transaction Parser<br/>GPT-5-mini]
         PULSE[Financial Pulse<br/>Quantfolio AI]
     end
 
@@ -78,11 +78,16 @@ graph TB
     U2 --> BOT
     U3 --> CSV
 
-    WEB & BOT & CSV --> VAL
+    WEB --> VAL
+    BOT --> VAL
+    CSV --> VAL
     VAL --> FX
     FX --> API_TX
     
-    API_TX --> T1 & T2 & T3 & T4
+    API_TX --> T1
+    API_TX --> T2
+    API_TX --> T3
+    API_TX --> T4
     T2 --> T7
     T1 --> T6
     
@@ -96,17 +101,24 @@ graph TB
     PULSE --> T10
     
     T4 --> T5
-    T5 --> TV & Poly
-    TV & Poly --> T5
+    TV --> T5
+    Poly --> T5
     
-    T1 & T2 & T3 & T4 --> AI
-    AI --> Copilot & OR
+    T1 --> AI
+    T2 --> AI
+    T3 --> AI
+    T4 --> AI
+    AI --> Copilot
+    AI --> OR
     
     T8 --> DASH
     T10 --> WIDGET
-    T5 & T8 --> CHARTS
+    T5 --> CHARTS
+    T8 --> CHARTS
     
-    DASH & WIDGET & CHARTS --> Output
+    DASH --> Output
+    WIDGET --> Output
+    CHARTS --> Output
 ```
 
 ---

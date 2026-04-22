@@ -57,17 +57,28 @@ flowchart LR
         G3[Portfolio Charts]
     end
 
-    A1 & A2 & A3 & A4 --> B1
+    A1 --> B1
+    A2 --> B1
+    A3 --> B1
+    A4 --> B1
     B1 --> B2 --> B3
-    B3 --> C1 & C2 & C3
-    C1 & C2 --> D1
+    B3 --> C1
+    B3 --> C2
+    B3 --> C3
+    C1 --> D1
+    C2 --> D1
     D1 --> D2 --> D3
-    D2 --> G1 & G3
+    D2 --> G1
+    D2 --> G3
     C4 --> E1
-    E1 --> E2 & E3
-    E2 & E3 --> E4
+    E1 --> E2
+    E1 --> E3
+    E2 --> E4
+    E3 --> E4
     E4 --> G3
-    C1 & C2 & C4 --> F1
+    C1 --> F1
+    C2 --> F1
+    C4 --> F1
     F1 --> F2 --> F3 --> G2
 ```
 

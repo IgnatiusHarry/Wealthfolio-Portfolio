@@ -61,7 +61,7 @@ graph TB
     end
 
     subgraph AI["🤖 AI Processing Layer"]
-        NLP[NLP Parser<br/>GPT-4o / GPT-4o-mini]
+        NLP[NLP Parser<br/>GPT-5-mini]
         CLASS[Auto-Classifier<br/>Food · Transport · Rent]
         PULSE[Financial Pulse<br/>Quantfolio AI]
     end
@@ -94,19 +94,29 @@ graph TB
     CSV --> API
     NLP --> CLASS
     CLASS --> API
-    API --> ACC & TXN & PORT & IA
+    API --> ACC
+    API --> TXN
+    API --> PORT
+    API --> IA
     TXN --> FX
     ACC --> FX
     PORT --> MD
     IA --> MD
-    TXN & PORT & ACC --> SNAP
+    TXN --> SNAP
+    PORT --> SNAP
+    ACC --> SNAP
     SNAP --> SNAP2
     SNAP2 --> DASH
-    ACC & PORT & TXN --> PULSE
+    ACC --> PULSE
+    PORT --> PULSE
+    TXN --> PULSE
     PULSE --> INSIGHT
-    CRON --> SNAP & PULSE
+    CRON --> SNAP
+    CRON --> PULSE
     MD --> CHARTS
-    DASH & INSIGHT & CHARTS --> OUT
+    DASH --> OUT
+    INSIGHT --> OUT
+    CHARTS --> OUT
 ```
 
 ---
