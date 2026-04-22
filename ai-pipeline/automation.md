@@ -1,6 +1,6 @@
 # 🤖 Automation & Cron Jobs — WealthFolio
 
-> ⚠️ **All sample outputs and data shown are fictional dummy data for portfolio demonstration only.**
+> ⚠️ **Disclaimer:** All sample outputs and data shown are fictional dummy data for portfolio demonstration only.
 
 ## Automation Philosophy
 
@@ -10,122 +10,189 @@ WealthFolio operates on a **"set and forget"** model — once configured, all tr
 
 ## Cron Job Registry
 
+All cron jobs are configured in `vercel.json` and run on Vercel's serverless platform.
+
 ```javascript
-// Pseudocode — automation schedule
-const JOBS = [
-  {
-    name: 'portfolio-snapshot',
-    schedule: '0 6 * * *',       // Daily at 06:00 WIB
-    description: 'Calculate today portfolio value and store snapshot',
-    endpoint: '/api/portfolio-snapshot',
-    method: 'POST',
-    retries: 3
-  },
-  {
-    name: 'snapshot-backfill',
-    schedule: 'on-deploy',        // Triggered on each deployment
-    description: 'Fill any missing snapshots in the last 30 days',
-    endpoint: '/api/portfolio-snapshot-backfill',
-    method: 'POST',
-    body: { days: 30 }
-  },
-  {
-    name: 'daily-telegram-summary',
-    schedule: '30 6 * * *',      // Daily at 06:30 WIB
-    description: 'Send yesterday summary + today budget via Telegram',
-    type: 'bot-message'
-  },
-  {
-    name: 'weekly-trend-report',
-    schedule: '0 7 * * 1',       // Every Monday 07:00
-    description: 'Compare this week vs last week across all categories',
-    type: 'bot-message'
-  },
-  {
-    name: 'monthly-pnl',
-    schedule: '0 8 1 * *',       // 1st of month, 08:00
-    description: 'Full P&L, savings rate, category breakdown for last month',
-    type: 'bot-message'
+// Vercel cron configuration
+{
+  "crons": [
+    {
+      "path": "/api/cron/ai-refresh",
+      "schedule": "0 1 * * *"  // Daily at 01:00 UTC
+    },
+    {
+      "path": "/api/cron/snapshot-daily",
+      "schedule": "0 15 * * *"  // Daily at 15:00 UTC
+    },
+    {
+      "path": "/api/cron/snapshot-reconcile",
+      "schedule": "45 15 * * *"  // Daily at 15:45 UTC
+    }
+  ]
+}
+```
+
+### Job Details
+
+| Job | Schedule (UTC) | Schedule (WIB) | Action |
+|---|---|---|---|
+| `ai-refresh` | 01:00 UTC | 08:00 WIB | Generate AI portfolio insights |
+| `snapshot-daily` | 15:00 UTC | 22:00 WIB | Compute and store daily portfolio snapshot |
+| `snapshot-reconcile` | 15:45 UTC | 22:45 WIB | Reconcile snapshot to audit ledger |
+
+---
+
+## External Automation (OpenClaw)
+
+### Market Data Ingestion
+
+**Job:** `market_data_daily_refresh`
+**Schedule:** 15:30 UTC (22:30 WIB)
+**Platform:** OpenClaw agent on VPS
+
+**Responsibilities:**
+- Fetch current prices for all portfolio assets
+- Dual-source routing: TradingView (IDX .JK symbols), Polygon (US symbols)
+- UPSERT to `market_data` table
+- Graceful degradation on API failures
+
+### FX Rate Refresh
+
+**Schedule:** Daily after US market close
+**Platform:** OpenClaw agent
+
+**Responsibilities:**
+- Fetch latest FX rates for IDR pairs
+- Upsert to `fx_rates` table
+- Maintain rate freshness for live valuation
+
+---
+
+## Cron Authentication
+
+All cron endpoints validate the `CRON_SECRET` header:
+
+```javascript
+// Cron endpoint pattern
+export default async function handler(req, res) {
+  const cronSecret = process.env.CRON_SECRET || '';
+  const authHeader = req.headers['authorization'] || '';
+  
+  const isAuthorized = authHeader === `Bearer ${cronSecret}`;
+  
+  if (!isAuthorized) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
-];
+  
+  // Process cron job...
+}
+```
+
+---
+
+## Health Monitoring
+
+Each cron job includes health check patterns:
+
+```javascript
+// Logging pattern
+console.log('🤖 Starting daily AI insight generation...');
+try {
+  // Job logic
+  console.log(`✅ Daily AI insight updated (${provider} / ${model})`);
+} catch (err) {
+  console.error('❌ Daily AI generation failed:', err.message);
+}
 ```
 
 ---
 
 ## Sample Automated Outputs (Dummy Data)
 
-### Daily Summary (Telegram)
+### Daily Portfolio Snapshot (Computed)
+
 ```
-📊 WealthFolio · April 22, 2024
+📊 WealthFolio Snapshot — April 22, 2024
 
-💰 Yesterday: NT$312 spent (-4.2% vs 7-day avg NT$326)
-🍱 Food: NT$267 / NT$300 ✅
-🚇 Transport: NT$28
-🎮 Entertainment: NT$17
+💰 Total Net Worth: Rp 1,245,000,000
+├── Cash: Rp 185,000,000 (14.9%)
+└── Investments: Rp 1,060,000,000 (85.1%)
 
-📈 Portfolio: NT$340,000 (+NT$2,400 vs yesterday)
-💼 Monthly Buffer: NT$+1,840 ✅ (18 under / 3 over days)
+📈 Portfolio Performance:
+├── Total Invested: Rp 890,000,000
+├── Current Value: Rp 1,060,000,000
+├── Unrealized P&L: Rp +170,000,000 (+19.1%)
+├── Gains: Rp 195,000,000
+└── Losses: Rp 25,000,000
 
-💡 Tip: Your Friday food spend is NT$82 above daily avg — plan ahead!
-```
+🏦 Accounts:
+├── BCA Indonesia: Rp 125,000,000 (IDR)
+├── Taiwan Bank: Rp 42,500,000 (NTD)
+└── IBKR Investment: Rp 17,500,000 (USD)
 
-### Weekly Trend Report (Dummy)
-```
-📅 Weekly Report · Apr 15–21, 2024
-
-SPENDING vs Previous Week:
-🍱 Food:         NT$1,847 → NT$1,634  ↘️ -11.5% Better!
-🚇 Transport:    NT$196  → NT$224     ↗️ +14.3% Watch out
-🎮 Entertainment: NT$390 → NT$480    ↗️ +23.1% ⚠️ High
-
-💰 Total:        NT$5,120 → NT$4,890  ↘️ -4.5% ✅
-📈 Portfolio:    NT$330,000 → NT$340,000  ↗️ +3.0%
-
-🏆 Best day: Apr 18 — NT$89 only (67% under budget!)
-⚠️ Worst day: Apr 19 — NT$318 (6% over budget)
+Generated: 2024-04-22 15:00 UTC
 ```
 
-### Monthly P&L Report (Dummy)
+### AI Insight Report (Generated at 01:00 UTC)
+
 ```
-📊 Monthly P&L · March 2024
+## 📊 Portfolio Health Score: 7.5/10
+*Strong performance with moderate risk in tech allocation*
 
-INCOME:          NT$ 85,000
-EXPENSES:        NT$ 64,800
-NET SAVINGS:     NT$ 20,200
-SAVINGS RATE:    23.8% (target: 25%) ⚠️ Slightly below
+## 🎯 Top 3 Risks
+1. **Concentration Risk** — NVDA represents 35% of portfolio
+2. **Currency Exposure** — 40% in USD assets, IDR weakness risk
+3. **Liquidity Gap** — Only 15% in cash, below 6-month buffer
 
-TOP CATEGORIES:
-1. Rent       NT$ 17,400  (26.8%)
-2. Food       NT$  6,240  (9.6%)  ↗️ +8% vs Feb
-3. Investment NT$ 12,000  (18.5%)
-4. Transport  NT$  2,640  (4.1%)
+## 💡 Top 3 Opportunities
+1. **Rebalance to ETFs** — Shift 10% from NVDA to IHSG ETF
+2. **DCA US Index** — Add monthly Rp 5M to US index fund
+3. **Emergency Fund** — Build 3-month expense buffer
 
-PORTFOLIO SNAPSHOT:
-Value:  NT$ 330,000
-Cost:   NT$ 290,000
-P&L:    NT$ +40,000 (+13.8%) ✅
+## ⚖️ Rebalancing Targets
+- Reduce NVDA: 35% → 25%
+- Increase IHSG ETF: 10% → 20%
+- Cash buffer: 15% → 20%
+
+## 💰 Cashflow Tips
+1. Automate savings transfer on salary day
+2. Food variance +12% this month — review spending
+3. 3 unused subscriptions detected
+
+**🎯 Priority Action This Week:** 
+Reduce NVDA by 10% and reallocate to IHSG ETF.
 ```
 
 ---
 
-## Bot Interaction Flow (Telegram)
+## Monitoring Dashboard
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant BOT as Telegram Bot
-    participant AI as GPT-5 Parser
-    participant DB as Supabase
-    participant DASH as Dashboard
+Query for cron job health:
 
-    U->>BOT: "makan siang 85 NT"
-    BOT->>AI: Parse transaction
-    AI-->>BOT: {amount:85, currency:NTD, category:Food, confidence:0.97}
-    BOT->>DB: INSERT transaction
-    DB-->>BOT: Success (id: xxx)
-    BOT->>DB: GET today food total
-    DB-->>BOT: Today: NT$145 / NT$300
-    BOT-->>U: "✅ NT$85 Food saved!\n🍱 Today: NT$145/300 (48%)\n💰 Left: NT$155"
-    DB->>DASH: Real-time update (Supabase subscription)
-    DASH-->>U: Dashboard refreshes automatically
+```sql
+-- Check latest snapshot
+SELECT * FROM portfolio_snapshot ORDER BY date DESC LIMIT 1;
+
+-- Check market data freshness
+SELECT 
+  source, 
+  COUNT(*) AS count,
+  MAX(last_updated_at) AS freshest,
+  MIN(last_updated_at) AS stalest
+FROM market_data 
+GROUP BY source;
+
+-- Check AI insights freshness
+SELECT * FROM ai_insights WHERE id = 1;
 ```
+
+---
+
+## Alert Conditions
+
+| Condition | Action |
+|---|---|
+| `portfolio_snapshot.date` not today/yesterday | Alert ops team |
+| `market_data.last_updated_at` > 24h old | Check OpenClaw status |
+| AI refresh fails | Log error, retain previous |
+| Snapshot reconcile mismatch | Flag for investigation |

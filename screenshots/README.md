@@ -1,28 +1,29 @@
 # 🖼️ Screenshots
 
-> ⚠️ **All screenshots use fictional dummy data. No real financial data is shown.**
+> ⚠️ **Disclaimer:** All screenshots use fictional dummy data. No real financial data is shown.
 
 ## Dashboard Overview
 ![Dashboard](./_placeholder-dashboard.md)
 
-*Main dashboard showing KPI cards, Financial Pulse AI widget, and portfolio summary.*
+*Main dashboard showing KPI cards, AI Insights widget, and portfolio summary.*
 
 **What this demonstrates:**
 - Real-time multi-currency balance display
-- Financial Pulse AI widget with spinning loader during generation
+- AI Insights widget with latest Quantfolio AI analysis
 - Glassmorphism dark-mode UI design
 - Privacy mode toggle (blur all numbers)
 
 ---
 
-## Financial Pulse AI Widget
-*Screenshot: AI widget with 3 per-card insights (warning/positive/tip)*
+## AI Insights Widget
+*Screenshot: AI widget with portfolio health score, risks, opportunities, and recommendations*
 
 **What this demonstrates:**
-- Live AI insight generation (GPT-5 powered)
-- Progress bar for daily food budget (🟩🟩🟩⬜⬜⬜ 35%)
-- Per-card colored insights: Red (risk) / Green (positive) / Purple (tip)
-- Varied output using temperature=0.75 and rotating analytical lenses
+- Live AI insight generation (GPT-4o powered)
+- Portfolio health score (1-10)
+- Risk identification and mitigation suggestions
+- Actionable opportunities and rebalancing targets
+- Cashflow tips and priority actions
 
 ---
 
@@ -32,6 +33,7 @@
 **What this demonstrates:**
 - Multi-currency transaction log (NTD, IDR, USD)
 - Category color-coding and filtering
+- FX-normalized amounts (amount_idr)
 - Responsive table with privacy mode compatibility
 
 ---
@@ -40,21 +42,21 @@
 *Screenshot: Investment portfolio with P&L tracking*
 
 **What this demonstrates:**
-- Real-time portfolio valuation
+- Real-time portfolio valuation via market_data
 - Unrealized P&L with color-coded gains/losses
-- Asset type breakdown (stocks, ETFs, crypto)
-- Realized P&L section for closed positions
+- Asset type breakdown (stocks, ETFs, US stocks)
+- Current prices from TradingView (IDX) and Polygon (US)
 
 ---
 
 ## Insights Page
-*Screenshot: AI analysis with Recharts waterfall chart*
+*Screenshot: AI analysis with portfolio allocation charts*
 
 **What this demonstrates:**
-- Cashflow waterfall visualization
-- Category spending breakdown charts
+- Asset allocation pie chart
+- Performance metrics and trends
 - AI-generated comprehensive financial analysis
-- Multi-period comparison (this month vs last month)
+- Daily snapshot history
 
 ---
 

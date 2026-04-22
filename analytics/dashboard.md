@@ -7,7 +7,7 @@
 The dashboard is designed around 3 tiers of financial awareness:
 
 ```
-Tier 1 (Immediate):  Today's food spend vs budget
+Tier 1 (Immediate):  Today's spending vs budget
 Tier 2 (Monthly):    Cashflow, savings rate, buffer
 Tier 3 (Strategic):  Portfolio P&L, investment tracking
 ```
@@ -16,77 +16,73 @@ Tier 3 (Strategic):  Portfolio P&L, investment tracking
 
 ## Key Metrics
 
-### Dummy Scenario: Expat in Taiwan, April 2024
+### Dummy Scenario: Portfolio in Indonesia, April 2026
 
 | KPI | Value (Dummy) | Period | Status |
 |---|---|---|---|
-| Monthly Income | NT$ 85,000 | April 2024 | — |
-| Total Expenses | NT$ 62,300 | April 2024 | ↗️ +4.2% vs March |
-| Savings Rate | **26.7%** | April 2024 | ✅ Above 25% target |
-| Food Spend (avg/day) | NT$ 245 | This month | ✅ Under NT$300 limit |
-| Portfolio Value | NT$ 340,000 | Today | ↗️ +12.4% YTD |
-| Cumulative Buffer | NT$ +1,840 | Month-to-date | ✅ 18 under / 3 over |
-| Net Worth Change | +NT$ 22,700 | April 2024 | ↗️ New high |
+| Net Worth | Rp 1,245,000,000 | Today | ↗️ +8.2% this month |
+| Total Cash | Rp 185,000,000 | Today | — |
+| Investment Value | Rp 1,060,000,000 | Today | ↗️ +12.4% YTD |
+| Total Invested | Rp 890,000,000 | Today | — |
+| Unrealized P&L | Rp +170,000,000 | Today | ✅ +19.1% |
+| Savings Rate | **26.7%** | April 2026 | ✅ Above 25% target |
 
 ---
 
-## Spending Breakdown (Dummy Data)
+## Portfolio Allocation (Dummy Data)
 
 ```mermaid
-pie title Monthly Expense Distribution (NT$ 62,300)
-    "Rent 🏠" : 28
-    "Food 🍱" : 22
-    "Transport 🚇" : 8
-    "Entertainment 🎮" : 12
-    "Investment 📈" : 20
-    "Other" : 10
+pie title Investment Allocation (Rp 1,060,000,000)
+    "IDX Stocks 📈" : 45
+    "US Stocks 🇺🇸" : 30
+    "ETFs 📊" : 15
+    "Crypto 🪙" : 5
+    "Cash 🏦" : 5
 ```
 
 ---
 
-## Food Budget Trend (Dummy — Last 7 Days)
+## Holdings Performance (Dummy — Last 5 Positions)
 
-| Date | Spend (NT$) | vs Limit | Status |
-|---|---|---|---|
-| Apr 22 (Today) | 145 | -155 | ✅ On Track |
-| Apr 21 | 267 | -33 | ✅ On Track |
-| Apr 20 | 89 | -211 | ✅ Under |
-| Apr 19 | **318** | **+18** | ⚠️ Over Budget |
-| Apr 18 | 220 | -80 | ✅ On Track |
-| Apr 17 | 190 | -110 | ✅ On Track |
-| Apr 16 | **305** | **+5** | ⚠️ Over Budget |
-
-**7-Day Average:** NT$219/day — **27% under budget** ✅
+| Symbol | Type | Qty | Avg Price | Current | P&L | P&L % |
+|---|---|---|---|---|---|---|
+| BBCA.JK | IDX Stock | 500 | Rp 8,200 | Rp 9,250 | +Rp 525,000 | +12.8% ✅ |
+| AAPL | US Stock | 10 | $145 | $178.50 | +$335 | +23.1% ✅ |
+| BBRX.JK | IDX Stock | 1000 | Rp 4,100 | Rp 3,850 | -Rp 250,000 | -6.1% ⚠️ |
+| IHSG ETF | ETF | 200 | Rp 1,050 | Rp 1,180 | +Rp 26,000 | +12.4% ✅ |
+| NVDA | US Stock | 5 | $420 | $890 | +$2,350 | +111.9% ✅ |
 
 ---
 
 ## Sample AI-Generated Insights (Dummy)
 
-These are **example outputs** from the Financial Pulse system:
+These are **example outputs** from the Quantfolio AI system:
 
-> 📉 **Food pattern alert:** You overspend on Saturdays by avg NT$67 vs weekdays — consider meal-prepping on Fridays.
+> 📊 **Portfolio Health Score: 7.5/10** — Strong performance with moderate concentration risk in tech stocks.
 
-> ✅ **Buffer healthy:** NT$+1,840 ahead of target with 8 days left — that's NT$230 buffer room per remaining day.
+> 📉 **Risk Alert:** NVDA represents 35% of portfolio — consider rebalancing to lower single-stock concentration.
 
-> 💡 **Portfolio tip:** With 3 positions up >10% this month, consider rebalancing 5% into cash buffer for Q2 volatility protection.
+> 💡 **Opportunity:** Shift 10% from NVDA to IHSG ETF for diversification while locking in gains.
+
+> 💰 **Cashflow Tip:** Food variance is +12% this month — review weekend spending patterns.
 
 ---
 
-## Cashflow Waterfall (Dummy — April 2024)
+## Cashflow Waterfall (Dummy — April 2026)
 
 ```
-Income:          NT$ +85,000
-  └─ Salary      NT$ +85,000
+Income:          Rp +85,000,000
+  └─ Salary      Rp +85,000,000
 
-Expenses:        NT$ -62,300
-  ├─ Rent        NT$ -17,400
-  ├─ Food        NT$ -5,390
-  ├─ Transport   NT$ -2,240
-  ├─ Entertainment NT$ -3,120
-  ├─ Investment  NT$ -12,500
-  └─ Other       NT$ -2,150       (wait, rest is remaining)
+Expenses:        Rp -62,300,000
+  ├─ Rent        Rp -17,400,000
+  ├─ Food        Rp -13,706,000
+  ├─ Transport   Rp -5,240,000
+  ├─ Entertainment Rp -7,860,000
+  ├─ Investment  Rp -12,500,000
+  └─ Other       Rp -5,594,000
 
-Net Savings:     NT$ +22,700
+Net Savings:     Rp +22,700,000
 Savings Rate:    26.7% ✅
 ```
 
@@ -95,25 +91,68 @@ Savings Rate:    26.7% ✅
 ## Analytics Methodology
 
 ### Currency Normalization
-All transactions stored with `amount_idr` column for unified aggregation:
-```
-NT$1 = IDR 500 (approximate, rate refreshed daily)
-USD$1 = IDR 16,200
-SGD$1 = IDR 12,000
+All transactions stored with `amount_idr` column for unified aggregation. FX resolution uses:
+
+```javascript
+// resolveFxRate() chain
+async function resolveFxRate(db, date, currency) {
+  if (currency === 'IDR') return 1;
+  
+  // 1. Try fx_history (historical rates)
+  const historical = await db.from('fx_history')
+    .select('rate')
+    .eq('currency', currency)
+    .eq('date', date)
+    .single();
+  if (historical.data) return historical.data.rate;
+  
+  // 2. Fallback to fx_rates (latest rates)
+  const latest = await db.from('fx_rates')
+    .select('rate')
+    .eq('from_ccy', currency)
+    .single();
+  if (latest.data) return latest.data.rate;
+  
+  // 3. Fallback to 1.0 with warning
+  return 1.0;
+}
 ```
 
 ### Category Classification Logic
+
+Multi-signal classification with AI fallback:
+
 ```javascript
-// Simplified auto-classification rules
-const classifyTransaction = (description, amount, currency) => {
+// Simplified classification
+function classifyTransaction(description, amount) {
   const desc = description.toUpperCase();
+  
+  // Signal 1: Keyword matching
   if (desc.includes('MAKAN') || desc.includes('FOOD') || desc.includes('RESTAURANT'))
     return 'Food';
   if (desc.includes('MRT') || desc.includes('BUS') || desc.includes('GRAB'))
     return 'Transport';
   if (desc.includes('RENT') || desc.includes('SEWA') || desc.includes('KOS'))
     return 'Rent';
-  // ... AI-powered fallback for unrecognized descriptions
-  return await aiClassify(description);
-};
+  
+  // Signal 2: Amount pattern
+  if (amount > 5000000 && !desc.includes('SALARY')) 
+    return 'Large Expense';
+    
+  // Signal 3: AI fallback
+  return aiClassify(description);
+}
 ```
+
+---
+
+## Real-Time Data Sources
+
+| Data | Source Table | Refresh |
+|---|---|---|
+| Account balances | `accounts` | Real-time |
+| Portfolio holdings | `portfolio` + `investment_assets` | Real-time |
+| Market prices | `market_data` | Daily (15:30 UTC via OpenClaw) |
+| FX rates | `fx_rates` | Daily |
+| Daily snapshot | `portfolio_snapshot` | Daily (15:00 UTC) |
+| AI insights | `ai_insights` | Daily (01:00 UTC) |

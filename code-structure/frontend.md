@@ -9,7 +9,7 @@ pages/
 └── index.js                    ← Root layout, routing, settings context
 
 components/
-├── AINotificationWidget.js     ← Financial Pulse AI widget (star component)
+├── AINotificationWidget.js     ← AI Insights widget (star component)
 ├── InsightsPage.js             ← Full AI analysis page with charts
 ├── HoldingsPage.js             ← Investment portfolio tracking
 ├── ActivitiesPage.js           ← Transaction timeline & search
@@ -19,8 +19,9 @@ components/
 
 lib/
 ├── settings.js                 ← Global settings context (privacy, currency, AI config)
-├── aiEngineConfig.js           ← AI provider configuration & client factory
-└── supabase.js                 ← Supabase client initialization
+├── fx.js                       ← FX resolution utilities
+├── supabase.js                 ← Supabase client initialization
+└── authMiddleware.js           ← API allowlist validation
 ```
 
 ---
@@ -28,6 +29,7 @@ lib/
 ## Key Design Patterns
 
 ### 1. Settings Context (Global State)
+
 ```javascript
 // lib/settings.js — Simplified
 export function SettingsProvider({ children }) {
@@ -55,6 +57,7 @@ export function SettingsProvider({ children }) {
 ```
 
 ### 2. Privacy Mode (Global Number Masking)
+
 ```javascript
 // Pattern used across all components
 const mask = (value) => {
@@ -63,27 +66,75 @@ const mask = (value) => {
 };
 
 // Usage in JSX
-<span>{mask('NT$85,000')}</span>
-// Privacy OFF: NT$85,000
-// Privacy ON:  NT$****
+<span>{mask('Rp 85,000,000')}</span>
+// Privacy OFF: Rp 85,000,000
+// Privacy ON:  Rp ****,*****,***
 ```
 
 ### 3. Data Fetching with Cache
+
 ```javascript
 // Pattern: Serve cache immediately, refresh in background
-const [data, setData] = useState(() => readLocalCache() || { accounts: [], transactions: [] });
+const [data, setData] = useState(() => readLocalCache() || { 
+  accounts: [], 
+  transactions: [], 
+  portfolio: [] 
+});
 
 useEffect(() => {
   // Fresh data loads without blocking UI
   Promise.all([
     fetch('/api/dashboard-data?table=accounts&limit=100'),
-    fetch('/api/dashboard-data?table=v_transactions_idr&limit=3000'),
-  ]).then(async ([accs, txs]) => {
-    const fresh = { accounts: await accs.json().data, transactions: await txs.json().data };
+    fetch('/api/dashboard-data?table=transactions&limit=3000'),
+    fetch('/api/dashboard-data?table=portfolio&limit=200'),
+  ]).then(async ([accs, txs, port]) => {
+    const fresh = { 
+      accounts: await accs.json().data, 
+      transactions: await txs.json().data,
+      portfolio: await port.json().data 
+    };
     setData(fresh);
     writeLocalCache(fresh);
   });
 }, []);
+```
+
+### 4. Error Boundaries
+
+```javascript
+// Error boundary component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div className="error-fallback">Something went wrong. Please refresh.</div>;
+    }
+    return this.props.children;
+  }
+}
+```
+
+### 5. Loading Skeletons
+
+```javascript
+// Skeleton component for loading states
+function DashboardSkeleton() {
+  return (
+    <div className="skeleton-grid">
+      <div className="skeleton-card skeleton-shimmer" style={{ height: '120px' }} />
+      <div className="skeleton-card skeleton-shimmer" style={{ height: '120px' }} />
+      <div className="skeleton-card skeleton-shimmer" style={{ height: '200px' }} />
+    </div>
+  );
+}
 ```
 
 ---
@@ -100,6 +151,7 @@ useEffect(() => {
 | Font | System default + monospace for numbers | Clean, fast rendering |
 
 ### Glassmorphism Card Pattern
+
 ```css
 .card {
   background: rgba(255, 255, 255, 0.03);
@@ -118,6 +170,38 @@ useEffect(() => {
 |---|---|
 | **LocalStorage caching** | All API responses cached, served instantly on next visit |
 | **Optimistic updates** | Settings changes reflect immediately, no loading state |
-| **Lazy data loading** | Heavy data (3,000 txns) loads after initial paint |
-| **Memoized calculations** | `useMemo` for financial aggregations (only recalc on data change) |
+| **Lazy data loading** | Heavy data (3,000+ txns) loads after initial paint |
+| **Memoized calculations** | `useMemo` for financial aggregations |
 | **Real-time subscriptions** | Supabase channel updates only trigger relevant components |
+| **Code splitting** | Dynamic imports for chart components |
+| **Image optimization** | Next.js Image component with lazy loading |
+
+---
+
+## Responsive Breakpoints
+
+```css
+/* Mobile-first approach */
+.container {
+  width: 100%;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```

@@ -6,9 +6,9 @@
 
 WealthFolio is designed as a **three-layer data platform**:
 
-1. **Ingestion Layer** — Multiple input channels (bot, web, CSV)
-2. **Processing Layer** — AI parsing, transformation, normalization
-3. **Presentation Layer** — Dashboard, alerts, AI insights
+1. **Ingestion Layer** — Multiple input channels (Telegram, web, CSV)
+2. **Processing Layer** — AI parsing, FX normalization, daily snapshots
+3. **Presentation Layer** — Dashboard, AI insights, alerts
 
 ---
 
@@ -19,28 +19,32 @@ graph TB
     subgraph Users["👤 User Interaction"]
         U1[Web Browser]
         U2[Telegram App]
-        U3[Discord Server]
+        U3[CSV Import]
     end
 
     subgraph Ingestion["📥 Ingestion Layer"]
-        BOT[Telegram / Discord Bot<br/>Node.js]
         WEB[Web Dashboard<br/>Next.js 14]
+        BOT[Telegram Bot]
         CSV[CSV Importer]
     end
 
-    subgraph AILayer["🤖 AI Layer (GitHub Copilot / GPT-5)"]
-        PARSE[Transaction Parser<br/>Extract: amount, category, currency, date]
-        CLASSIFY[Auto-Classifier<br/>Food · Transport · Rent · Entertainment · Investment]
-        PULSE[Financial Pulse Engine<br/>Quantfolio Intelligence — Daily Rotation]
-        PROMPT[Prompt Engineering<br/>Temperature: 0.75 · Context Window: 3,000 txns]
+    subgraph Processing["⚙️ Processing Layer"]
+        FX[FX Resolution<br/>resolveFxRate()]
+        VAL[Validation<br/>safeTable, safeOrder]
+        SNAP[Snapshot Engine<br/>compute_portfolio_snapshot()]
+        AI[AI Pipeline<br/>getPortfolioContext()]
+    end
+
+    subgraph AILayer["🤖 AI Layer"]
+        PARSE[Transaction Parser<br/>GPT-4o / GPT-4o-mini]
+        PULSE[Financial Pulse<br/>Quantfolio AI]
     end
 
     subgraph Backend["⚙️ Backend — Next.js API Routes"]
         API_TX[/api/dashboard-data]
-        API_SNAP[/api/portfolio-snapshot]
-        API_BACK[/api/portfolio-snapshot-backfill]
-        API_SET[/api/settings]
-        CRON[Cron Scheduler<br/>Hourly · Daily · Weekly · Monthly]
+        API_SNAP[/api/cron/snapshot-daily]
+        API_AI[/api/cron/ai-refresh]
+        API_MD[/api/cron/market-data]
     end
 
     subgraph DB["🗄️ Supabase PostgreSQL"]
@@ -48,45 +52,92 @@ graph TB
         T2[(transactions)]
         T3[(portfolio)]
         T4[(investment_assets)]
-        T5[(portfolio_snapshots)]
-        V1[(VIEW: v_transactions_idr<br/>Normalized to IDR base)]
+        T5[(market_data)]
+        T6[(fx_rates)]
+        T7[(fx_history)]
+        T8[(portfolio_snapshot)]
+        T9[(wealth_ledger_daily)]
+        T10[(ai_insights)]
+        T11[(goals)]
+    end
+
+    subgraph External["🌐 External Services"]
+        TV[TradingView<br/>IDX .JK symbols]
+        Poly[Polygon<br/>US symbols]
+        Copilot[GitHub Copilot<br/>gpt-5-mini]
+        OR[OpenRouter<br/>gemini-2.0-flash]
     end
 
     subgraph Output["📤 Presentation Layer"]
         DASH[Dashboard KPIs]
-        WIDGET[Financial Pulse Widget]
-        ALERTS[Telegram Alerts]
+        WIDGET[AI Insights Widget]
         CHARTS[Recharts Visualizations]
     end
 
     U1 --> WEB
     U2 --> BOT
-    U3 --> BOT
+    U3 --> CSV
 
-    BOT --> PARSE
-    WEB --> API_TX
-    CSV --> API_TX
-
-    PARSE --> CLASSIFY
-    CLASSIFY --> API_TX
-
+    WEB & BOT & CSV --> VAL
+    VAL --> FX
+    FX --> API_TX
+    
     API_TX --> T1 & T2 & T3 & T4
-    T2 --> V1
-    V1 --> API_SNAP
-    API_SNAP --> T5
-    API_BACK --> T5
-
-    T5 --> DASH
-    V1 --> PULSE
-    PULSE --> PROMPT
-    PROMPT --> WIDGET
-
-    CRON --> API_SNAP & ALERTS
-
-    DASH --> CHARTS
-    WIDGET --> DASH
-    CHARTS --> Output
+    T2 --> T7
+    T1 --> T6
+    
+    API_SNAP --> SNAP
+    SNAP --> T8
+    T8 --> T9
+    
+    API_AI --> AI
+    AI --> PARSE
+    PARSE --> PULSE
+    PULSE --> T10
+    
+    T4 --> T5
+    T5 --> TV & Poly
+    TV & Poly --> T5
+    
+    T1 & T2 & T3 & T4 --> AI
+    AI --> Copilot & OR
+    
+    T8 --> DASH
+    T10 --> WIDGET
+    T5 & T8 --> CHARTS
+    
+    DASH & WIDGET & CHARTS --> Output
 ```
+
+---
+
+## Data Flow Summary
+
+### Transaction Flow
+1. User submits transaction (Telegram/web/CSV)
+2. Server validates input (`safeTable`, `safeOrder`)
+3. FX resolution: `fx_history` (historical) → `fx_rates` (latest) → 1.0
+4. Server computes `amount_idr = amount * fx_rate`
+5. Insert to `transactions` table
+
+### Portfolio Valuation Flow
+1. Cron triggers `/api/cron/snapshot-daily` at 15:00 UTC
+2. SQL function `compute_portfolio_snapshot()` aggregates:
+   - Investment value from `portfolio` + `market_data`
+   - Cash value from `accounts` + `fx_rates`
+3. Upsert to `portfolio_snapshot` and `wealth_ledger_daily`
+
+### Market Data Flow
+1. OpenClaw agent triggers at 15:30 UTC
+2. Query active portfolio assets
+3. Route by symbol: TradingView (.JK) or Polygon (US)
+4. UPSERT to `market_data` with freshness timestamp
+
+### AI Insight Flow
+1. Cron triggers `/api/cron/ai-refresh` at 01:00 UTC
+2. `getPortfolioContext()` builds context from DB
+3. Provider chain: Copilot → OpenRouter → free models
+4. Upsert to `ai_insights` (singleton id=1)
 
 ---
 
@@ -94,11 +145,11 @@ graph TB
 
 | Concern | Current Approach | Scale-up Path |
 |---|---|---|
-| **Query speed** | Supabase views + limit params | Add Redis caching layer |
-| **AI cost** | Cached insights, generate on mount | Rate-limiting + edge caching |
-| **Multi-user** | Single user (personal) | Row-level security (Supabase RLS) per user |
-| **Data volume** | 3,000 transactions | Partition by month, archive old data |
-| **Bot concurrency** | Single instance | Message queue (BullMQ / Redis) |
+| **Query speed** | Supabase + limit params | Add Redis caching |
+| **AI cost** | Cached insights, provider fallback | Rate-limiting + edge caching |
+| **Multi-user** | Single user (personal) | Supabase RLS per user |
+| **Data volume** | ~3,000 transactions | Partition by month |
+| **Market data** | OpenClaw dual-source | Add more providers |
 
 ---
 
@@ -106,6 +157,8 @@ graph TB
 
 - ✅ No API keys in client-side code
 - ✅ Supabase Row Level Security (RLS) enabled
-- ✅ Settings synced via server-side PATCH (credentials: include)
+- ✅ Cron endpoints validate `CRON_SECRET` header
 - ✅ Privacy Mode — blur all sensitive numbers client-side
-- ✅ Bot commands require pre-authorized user ID whitelist
+- ✅ Service role key used only in server-side API routes
+- ✅ Environment variables stored securely on VPS
+- ✅ UFW firewall + HTTPS only on OpenClaw VPS
