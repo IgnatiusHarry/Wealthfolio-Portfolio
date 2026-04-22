@@ -39,6 +39,89 @@
 
 ---
 
+## 🆕 Feature Highlights (Latest)
+
+### 🏥 Portfolio Health Score
+Automated diagnostic engine that evaluates portfolio across 6 dimensions:
+- **Diversification** — largest position concentration check
+- **Cash Buffer** — months of expenses covered by cash reserves
+- **FX Exposure** — foreign currency risk assessment
+- **Concentration Risk** — sector/asset class allocation balance
+- **Performance** — return vs benchmark comparison
+- **Rebalancing Need** — drift from target allocation
+
+Each check returns a score (0-100) with actionable advice.
+
+### 💰 Income & Yield Tracking
+Multi-source income analytics:
+- Monthly income trend with bar charts (Recharts)
+- Income breakdown by source (salary, dividends, interest, freelance)
+- Monthly average calculation across all time periods
+- Date filtering (1M, 3M, 6M, YTD, 1Y, ALL)
+
+### 📊 Trading Center
+Trade journaling with performance tracking:
+- Buy/sell transaction logging
+- Trade matching engine (pairing buys with sells)
+- Realized P&L calculation per trade
+- Brokerage fee tracking per transaction
+- Holdings aggregation from trade history
+
+### 💳 Fees Tracker
+Comprehensive fee analysis:
+- FX spread cost tracking (actual vs mid-market rate)
+- Brokerage fee aggregation
+- Management fee breakdown
+- Fee-to-returns ratio analysis
+
+### 🗄️ SQL Editor
+Direct database query interface:
+- Run custom SQL queries against Supabase
+- Result table display with row count
+- Export query results
+- Syntax-aware input (for diagnostics & debugging)
+
+### 📥 Import / Export
+Data management tools:
+- CSV import for bulk transaction entry
+- Data export for external analysis
+- Bulk operations for data migration
+- Duplicate detection and cleanup
+
+### 🔒 Privacy Mode
+One-click privacy toggle:
+- Instantly blur all monetary amounts
+- Optimistic UI updates (no page reload)
+- Per-session preference via settings context
+
+### 🌓 Theme System
+Dynamic light/dark mode:
+- System preference detection
+- Manual toggle in topbar
+- CSS variables for consistent theming
+
+### 📱 Mobile-First Design
+Responsive layout with:
+- Collapsible sidebar navigation
+- Bottom navigation bar (5 key pages)
+- "More" menu with grid layout for secondary pages
+- Touch-optimized interactions
+
+### 🔔 Real-Time Sync
+Supabase Realtime subscriptions:
+- Auto-refresh on any database change
+- Toast notification on data updates
+- Real-time sync counter in topbar
+
+### 🤖 Telegram Bot Integration
+Transaction input via Telegram:
+- Natural language parsing ("makan siang 65 NTD")
+- Webhook-based architecture
+- Health monitoring with stale webhook detection
+- Settings page for connect/disconnect
+
+---
+
 ## 🛠️ What Makes This Project Unique
 
 > Most personal finance apps are generic. WealthFolio is engineered specifically for **financial complexity** — multiple currencies, cross-border investments, and the need for AI that understands behavioral patterns, not just numbers.
@@ -156,7 +239,7 @@ Wealthfolio-Portfolio/
 | **Styling** | Vanilla CSS, Glassmorphism | Premium dark-mode UI |
 | **Backend** | Next.js API Routes | REST endpoints, cron jobs |
 | **Database** | Supabase (PostgreSQL) | Data storage, real-time |
-| **AI** | GitHub Copilot (GPT-4o), OpenRouter (gemini-2.0-flash) | Insights, classification |
+| **AI** | GitHub Copilot (GPT-5-mini), OpenRouter (gemini-2.0-flash) | Insights, classification |
 | **Market Data** | TradingView (IDX), Polygon (US) | Price feeds |
 | **Bot** | Telegram Bot API | Transaction input |
 | **Orchestration** | OpenClaw (VPS) | AI routing, market data jobs |

@@ -1,83 +1,31 @@
-# 🖼️ Screenshots
+# 📸 Screenshots — WealthFolio
 
-> ⚠️ **Disclaimer:** All screenshots use fictional dummy data. No real financial data is shown.
+> **Note:** All data shown in screenshots is fictional dummy data for portfolio demonstration only.
 
-## Dashboard Overview
-![Dashboard](./_placeholder-dashboard.md)
+## Dashboard Pages
 
-*Main dashboard showing KPI cards, AI Insights widget, and portfolio summary.*
+| Page | Description |
+|---|---|
+| **[Dashboard](dashboard.png)** | Main overview — net worth summary, asset allocation, cash positions, portfolio breakdown, cash flow, AI insights |
+| **[Insights](insights.png)** | AI-generated portfolio intelligence — health score, risks, opportunities, rebalancing suggestions |
+| **[Activities](activities.png)** | Transaction history with filtering, search, category breakdown |
+| **[Wealth Growth](wealth-growth.png)** | Portfolio performance tracking — holdings detail, P&L, allocation charts, sparklines |
+| **[Income & Yield](income-yield.png)** | Income tracking — monthly trend, source breakdown, dividend tracking, yield analysis |
+| **[Health Score](health-score.png)** | Portfolio health diagnostics — diversification, cash buffer, FX exposure, concentration risk scoring |
+| **[My Goals](goals.png)** | Financial goals tracker — savings targets, progress tracking, deadline management |
 
-**What this demonstrates:**
-- Real-time multi-currency balance display
-- AI Insights widget with latest Quantfolio AI analysis
-- Glassmorphism dark-mode UI design
-- Privacy mode toggle (blur all numbers)
+## AI & Trading
 
----
+| Page | Description |
+|---|---|
+| **[AI Assistant](ai-assistant.png)** | Conversational AI chat — multi-turn context, portfolio-aware responses, scenario analysis |
+| **[Trading Center](trading-center.png)** | Trade journal — buy/sell records, matched trades, performance tracking |
+| **[Fees Tracker](fees-tracker.png)** | Fee analysis — brokerage fees, FX spread costs, management fee breakdown |
 
-## AI Insights Widget
-*Screenshot: AI widget with portfolio health score, risks, opportunities, and recommendations*
+## Tools & Settings
 
-**What this demonstrates:**
-- Live AI insight generation (GPT-4o powered)
-- Portfolio health score (1-10)
-- Risk identification and mitigation suggestions
-- Actionable opportunities and rebalancing targets
-- Cashflow tips and priority actions
-
----
-
-## Transactions Page
-*Screenshot: Transaction list with category filters and search*
-
-**What this demonstrates:**
-- Multi-currency transaction log (NTD, IDR, USD)
-- Category color-coding and filtering
-- FX-normalized amounts (amount_idr)
-- Responsive table with privacy mode compatibility
-
----
-
-## Holdings / Portfolio Page
-*Screenshot: Investment portfolio with P&L tracking*
-
-**What this demonstrates:**
-- Real-time portfolio valuation via market_data
-- Unrealized P&L with color-coded gains/losses
-- Asset type breakdown (stocks, ETFs, US stocks)
-- Current prices from TradingView (IDX) and Polygon (US)
-
----
-
-## Insights Page
-*Screenshot: AI analysis with portfolio allocation charts*
-
-**What this demonstrates:**
-- Asset allocation pie chart
-- Performance metrics and trends
-- AI-generated comprehensive financial analysis
-- Daily snapshot history
-
----
-
-## Telegram Bot Interaction
-*Screenshot: Bot conversation showing transaction input and confirmation*
-
-**Sample conversation (dummy data):**
-```
-User: makan siang 85 NT
-Bot:  ✅ NT$85 Food saved!
-      🍱 Today: NT$145/300 (48%)
-      💰 Left: NT$155
-
-User: coffee 65
-Bot:  ✅ NT$65 Food saved!
-      🍱 Today: NT$210/300 (70%)
-      💰 Left: NT$90 — Budget tight, dinner at NT$90 max!
-```
-
----
-
-> 📸 **To view actual screenshots:** Visit the live demo at [wealth.ignatiusharry.my.id](https://wealth.ignatiusharry.my.id)
->
-> Screenshots with dummy data will be added here. The live app uses the owner's personal Supabase instance.
+| Page | Description |
+|---|---|
+| **[SQL Editor](sql-editor.png)** | Direct database query interface — run custom SQL against Supabase, export results |
+| **[Import / Export](import-export.png)** | Data management — CSV import/export, bulk operations, data migration tools |
+| **[Settings](settings.png)** | App configuration — privacy mode, theme toggle, Telegram integration, account management |
