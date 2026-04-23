@@ -12,35 +12,48 @@ INPUT → PARSE → VALIDATE → TRANSFORM → STORE → AGGREGATE → OUTPUT
 
 ```mermaid
 flowchart LR
-    subgraph Input["📥 Input Sources"]
-        A1[Telegram Bot Message<br/>'makan 85 NT']
-        A2[Web Form Entry]
-        A3[CSV Import]
-        A4[Investment Transactions<br/>Buy/Sell]
+    subgraph Input["📥 Ingestion Layer"]
+        A1["Telegram Bot Message<br/>'makan 85 NT'"]
+        A2["Web Form Entry"]
+        A3["Bank CSV Upload"]
     end
 
-    subgraph Parse["🔍 Validation & FX Resolution"]
-        B1[Input Validation<br/>safeTable, safeOrder]
-        B2[resolveFxRate()<br/>fx_history → fx_rates → 1.0]
-        B3[Server-side amount_idr<br/>computation]
+    subgraph Parse["🔍 AI Parsing"]
+        B1["GPT-5 NLP Parser"]
+        B2["Extract Fields:<br/>amount · currency<br/>category · date"]
+        B3["Confidence Score<br/>(> 0.85 required)"]
+    end
+
+    subgraph Validate["✅ Validation"]
+        C1["Duplicate Detection<br/>24h window, same amount+desc"]
+        C2["Range Check<br/>(> NT$50,000 → flag)"]
+        C3["Currency Detection<br/>NTD · IDR · USD · SGD"]
+    end
+
+    subgraph Transform["⚙️ Transformation"]
+        D1["FX Normalization<br/>All → IDR base"]
+        D2["Category Mapping<br/>Food · Transport · Rent..."]
+        D3["Date Standardization<br/>YYYY-MM-DD UTC"]
     end
 
     subgraph Store["🗄️ Storage - Supabase"]
-        C1[(transactions)]
-        C2[(accounts)]
-        C3[(investment_transactions)]
-        C4[(investment_assets)]
+        E1["transactions table"]
+        E2["accounts - update balance"]
     end
 
-    subgraph Snapshot["📊 Daily Snapshot Pipeline"]
-        D1[compute_portfolio_snapshot()<br/>SQL function]
-        D2[(portfolio_snapshot)]
-        D3[(wealth_ledger_daily<br/>audit mirror)]
+    subgraph Aggregate["📊 Aggregation"]
+        F1["v_transactions_idr VIEW<br/>Pre-joined, normalized"]
+        F2["Monthly summaries"]
+        F3["Portfolio snapshots"]
+    end
+
+    subgraph Output["📤 Output"]
+        G1["Dashboard KPIs"]
+        G2["AI Insights"]
+        G3["Telegram confirmation"]
     end
 
     subgraph MarketData["📈 Market Data Ingestion"]
-        E1[OpenClaw Agent<br/>Dual-source routing]
-        E2[TradingView .JK<br/>IDX stocks]
         E3[Polygon<br/>US stocks]
         E4[(market_data)]
     end

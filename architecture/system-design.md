@@ -17,54 +17,33 @@ WealthFolio is designed as a **three-layer data platform**:
 ```mermaid
 graph TB
     subgraph Users["👤 User Interaction"]
-        U1[Web Browser]
-        U2[Telegram App]
-        U3[CSV Import]
+        U1["Web Browser"]
+        U2["Telegram App"]
+        U3["Discord Server"]
     end
 
     subgraph Ingestion["📥 Ingestion Layer"]
-        WEB[Web Dashboard<br/>Next.js 14]
-        BOT[Telegram Bot]
-        CSV[CSV Importer]
+        BOT["Telegram / Discord Bot<br/>Node.js"]
+        WEB["Web Dashboard<br/>Next.js 14"]
+        CSV["CSV Importer"]
     end
 
-    subgraph Processing["⚙️ Processing Layer"]
-        FX[FX Resolution<br/>resolveFxRate()]
-        VAL[Validation<br/>safeTable, safeOrder]
-        SNAP[Snapshot Engine<br/>compute_portfolio_snapshot()]
-        AI[AI Pipeline<br/>getPortfolioContext()]
-    end
-
-    subgraph AILayer["🤖 AI Layer"]
-        PARSE[Transaction Parser<br/>GPT-5-mini]
-        PULSE[Financial Pulse<br/>Quantfolio AI]
+    subgraph AILayer["🤖 AI Layer (GitHub Copilot / GPT-5)"]
+        PARSE["Transaction Parser<br/>Extract: amount, category, currency, date"]
+        CLASSIFY["Auto-Classifier<br/>Food · Transport · Rent · Entertainment · Investment"]
+        PULSE["Financial Pulse Engine<br/>Quantfolio Intelligence — Daily Rotation"]
+        PROMPT["Prompt Engineering<br/>Temperature: 0.75 · Context Window: 3,000 txns"]
     end
 
     subgraph Backend["⚙️ Backend — Next.js API Routes"]
-        API_TX[/api/dashboard-data]
-        API_SNAP[/api/cron/snapshot-daily]
-        API_AI[/api/cron/ai-refresh]
-        API_MD[/api/cron/market-data]
+        API_TX["/api/dashboard-data"]
+        API_SNAP["/api/portfolio-snapshot"]
+        API_BACK["/api/portfolio-snapshot-backfill"]
+        API_SET["/api/settings"]
+        CRON["Cron Scheduler<br/>Hourly · Daily · Weekly · Monthly"]
     end
 
     subgraph DB["🗄️ Supabase PostgreSQL"]
-        T1[(accounts)]
-        T2[(transactions)]
-        T3[(portfolio)]
-        T4[(investment_assets)]
-        T5[(market_data)]
-        T6[(fx_rates)]
-        T7[(fx_history)]
-        T8[(portfolio_snapshot)]
-        T9[(wealth_ledger_daily)]
-        T10[(ai_insights)]
-        T11[(goals)]
-    end
-
-    subgraph External["🌐 External Services"]
-        TV[TradingView<br/>IDX .JK symbols]
-        Poly[Polygon<br/>US symbols]
-        Copilot[GitHub Copilot<br/>gpt-5-mini]
         OR[OpenRouter<br/>gemini-2.0-flash]
     end
 
