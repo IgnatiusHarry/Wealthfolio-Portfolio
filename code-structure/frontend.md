@@ -6,16 +6,37 @@
 
 ```
 pages/
-└── index.js                    ← Root layout, routing, settings context
+├── dashboard.js                ← KPI overview + snapshot cards
+├── cashflow.js                 ← Cash flow trends + filters
+├── portfolio.js                ← Holdings + performance
+├── insights.js                 ← AI insights page
+├── assistant.js                ← Dedicated AI assistant chat
+├── activities.js               ← Transaction timeline + search
+├── goals.js                    ← Goals tracking
+├── income.js                   ← Income breakdown
+├── fees.js                     ← Fees tracker
+├── trading.js                  ← Trade journal
+├── health.js                   ← Portfolio health score
+├── wealth-growth.js            ← Wealth growth tracker
+├── import-export.js            ← CSV import/export
+├── settings.js                 ← Preferences + privacy
+├── admin.js                    ← Admin fixes (internal)
+└── index.js                    ← Routing + layout wrapper
 
 components/
-├── AINotificationWidget.js     ← AI Insights widget (star component)
-├── InsightsPage.js             ← Full AI analysis page with charts
+├── DashboardLayout.js          ← Sidebar / bottom nav layout
+├── AIChatPage.js               ← Chat UI wrapper
+├── AIChat.js                   ← Chat component + quick prompts
+├── InsightsPage.js             ← AI analysis + charts
 ├── HoldingsPage.js             ← Investment portfolio tracking
 ├── ActivitiesPage.js           ← Transaction timeline & search
 ├── CashByAccount.js            ← Account balance breakdown
-├── DashboardPage.js            ← Main KPI overview
-└── [various chart components]  ← Recharts-based visualizations
+├── GoalsPage.js                ← Goals UI
+├── IncomePage.js               ← Income analytics
+├── FeesTrackerPage.js          ← Fees analytics
+├── HealthPage.js               ← Portfolio health scoring
+├── WealthGrowth.js             ← Growth charting
+└── [chart components]          ← Recharts visualizations
 
 lib/
 ├── settings.js                 ← Global settings context (privacy, currency, AI config)

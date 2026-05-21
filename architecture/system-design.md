@@ -28,23 +28,36 @@ graph TB
         CSV["CSV Importer"]
     end
 
-    subgraph AILayer["🤖 AI Layer (GitHub Copilot / GPT-5)"]
-        PARSE["Transaction Parser<br/>Extract: amount, category, currency, date"]
-        CLASSIFY["Auto-Classifier<br/>Food · Transport · Rent · Entertainment · Investment"]
-        PULSE["Financial Pulse Engine<br/>Quantfolio Intelligence — Daily Rotation"]
-        PROMPT["Prompt Engineering<br/>Temperature: 0.75 · Context Window: 3,000 txns"]
-    end
-
     subgraph Backend["⚙️ Backend — Next.js API Routes"]
-        API_TX["/api/dashboard-data"]
+        API_TX["/api/transactions"]
+        API_DASH["/api/dashboard-data"]
         API_SNAP["/api/portfolio-snapshot"]
-        API_BACK["/api/portfolio-snapshot-backfill"]
+        API_AI["/api/ai-insights"]
         API_SET["/api/settings"]
         CRON["Cron Scheduler<br/>Hourly · Daily · Weekly · Monthly"]
     end
 
+    subgraph Processing["🧠 Processing Layer"]
+        VAL["Validation & Sanitization"]
+        FX["FX Resolution<br/>fx_history → fx_rates → 1.0"]
+        SNAP["Snapshot Engine<br/>compute_portfolio_snapshot()"]
+        AICTX["AI Context Builder"]
+    end
+
+    subgraph AI["🤖 AI Providers"]
+        COP["GitHub Copilot"]
+        OR["OpenRouter (fallback)"]
+    end
+
     subgraph DB["🗄️ Supabase PostgreSQL"]
-        OR[OpenRouter<br/>gemini-2.0-flash]
+        ACC[(accounts)]
+        TXN[(transactions)]
+        PORT[(portfolio)]
+        IA[(investment_assets)]
+        MD[(market_data)]
+        FXT[(fx_rates / fx_history)]
+        SNAP2[(portfolio_snapshot)]
+        INS[(ai_insights)]
     end
 
     subgraph Output["📤 Presentation Layer"]
@@ -57,44 +70,40 @@ graph TB
     U2 --> BOT
     U3 --> CSV
 
-    WEB --> VAL
-    BOT --> VAL
-    CSV --> VAL
+    WEB --> API_TX
+    BOT --> API_TX
+    CSV --> API_TX
+
+    API_TX --> VAL
     VAL --> FX
-    FX --> API_TX
-    
-    API_TX --> T1
-    API_TX --> T2
-    API_TX --> T3
-    API_TX --> T4
-    T2 --> T7
-    T1 --> T6
-    
+    FX --> TXN
+    FX --> ACC
+
+    API_DASH --> ACC
+    API_DASH --> TXN
+    API_DASH --> PORT
+    API_DASH --> MD
+
+    CRON --> API_SNAP
     API_SNAP --> SNAP
-    SNAP --> T8
-    T8 --> T9
-    
-    API_AI --> AI
-    AI --> PARSE
-    PARSE --> PULSE
-    PULSE --> T10
-    
-    T4 --> T5
-    TV --> T5
-    Poly --> T5
-    
-    T1 --> AI
-    T2 --> AI
-    T3 --> AI
-    T4 --> AI
-    AI --> Copilot
-    AI --> OR
-    
-    T8 --> DASH
-    T10 --> WIDGET
-    T5 --> CHARTS
-    T8 --> CHARTS
-    
+    SNAP --> SNAP2
+
+    CRON --> API_AI
+    API_AI --> AICTX
+    AICTX --> COP
+    AICTX --> OR
+    COP --> INS
+    OR --> INS
+
+    PORT --> MD
+    IA --> MD
+
+    ACC --> DASH
+    TXN --> DASH
+    PORT --> CHARTS
+    SNAP2 --> CHARTS
+    INS --> WIDGET
+
     DASH --> Output
     WIDGET --> Output
     CHARTS --> Output
