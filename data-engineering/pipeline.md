@@ -12,87 +12,78 @@ INPUT → PARSE → VALIDATE → TRANSFORM → STORE → AGGREGATE → OUTPUT
 
 ```mermaid
 flowchart LR
-    subgraph Input["📥 Ingestion Layer"]
-        A1["Discord Bot Message<br/>'makan 85 NT'"]
-        A2["Web Form Entry"]
-        A3["Bank CSV Upload"]
+    subgraph Input["📥 Ingestion"]
+        I1["Discord Bot Message"]
+        I2["Web Form"]
+        I3["CSV Import"]
     end
 
-    subgraph Parse["🔍 AI Parsing"]
-        B1["GPT-5 NLP Parser"]
-        B2["Extract Fields:<br/>amount · currency<br/>category · date"]
-        B3["Confidence Score<br/>(> 0.85 required)"]
+    subgraph TxPipe["💸 Transaction Pipeline"]
+        P1["Parse NLP Input"]
+        P2["Validate Payload"]
+        P3["Resolve FX Rate"]
+        P4["Compute amount_idr"]
+        P5["Insert transaction"]
     end
 
-    subgraph Validate["✅ Validation"]
-        C1["Duplicate Detection<br/>24h window, same amount+desc"]
-        C2["Range Check<br/>(> NT$50,000 → flag)"]
-        C3["Currency Detection<br/>NTD · IDR · USD · SGD"]
+    subgraph DataStore["🗄️ Supabase"]
+        T1[(transactions)]
+        T2[(accounts)]
+        T3[(fx_history)]
+        T4[(fx_rates)]
+        T5[(portfolio_snapshot)]
+        T6[(ai_insights)]
+        T7[(market_data)]
     end
 
-    subgraph Transform["⚙️ Transformation"]
-        D1["FX Normalization<br/>All → IDR base"]
-        D2["Category Mapping<br/>Food · Transport · Rent..."]
-        D3["Date Standardization<br/>YYYY-MM-DD UTC"]
+    subgraph Derived["📊 Aggregation & Features"]
+        D1["Cashflow Aggregation"]
+        D2["Snapshot Computation"]
+        D3["AI Context Builder"]
     end
 
-    subgraph Store["🗄️ Storage - Supabase"]
-        E1["transactions table"]
-        E2["accounts - update balance"]
-    end
-
-    subgraph Aggregate["📊 Aggregation"]
-        F1["v_transactions_idr VIEW<br/>Pre-joined, normalized"]
-        F2["Monthly summaries"]
-        F3["Portfolio snapshots"]
-    end
-
-    subgraph Output["📤 Output"]
-        G1["Dashboard KPIs"]
-        G2["AI Insights"]
-        G3["Discord confirmation"]
-    end
-
-    subgraph MarketData["📈 Market Data Ingestion"]
-        E3[Polygon<br/>US stocks]
-        E4[(market_data)]
-    end
-
-    subgraph AIGen["🤖 AI Insight Generation"]
-        F1[getPortfolioContext()<br/>accounts + portfolio + tx]
-        F2[Provider Chain<br/>Copilot → OpenRouter]
-        F3[(ai_insights)]
+    subgraph Auto["⏱️ Automation"]
+        A1["Vercel Cron"]
+        A2["OpenClaw Jobs"]
+        A3["Market Data Refresh"]
+        A4["AI Refresh"]
     end
 
     subgraph Output["📤 Output"]
-        G1[Dashboard KPIs]
-        G2[AI Insights Widget]
-        G3[Portfolio Charts]
+        O1["Dashboard KPIs"]
+        O2["AI Insights Widget"]
+        O3["Portfolio Charts"]
+        O4["Discord Confirmation"]
     end
 
-    A1 --> B1
-    A2 --> B1
-    A3 --> B1
-    A4 --> B1
-    B1 --> B2 --> B3
-    B3 --> C1
-    B3 --> C2
-    B3 --> C3
-    C1 --> D1
-    C2 --> D1
-    D1 --> D2 --> D3
-    D2 --> G1
-    D2 --> G3
-    C4 --> E1
-    E1 --> E2
-    E1 --> E3
-    E2 --> E4
-    E3 --> E4
-    E4 --> G3
-    C1 --> F1
-    C2 --> F1
-    C4 --> F1
-    F1 --> F2 --> F3 --> G2
+    I1 --> P1
+    I2 --> P1
+    I3 --> P2
+    P1 --> P2 --> P3 --> P4 --> P5
+
+    P3 --> T3
+    P3 --> T4
+    P5 --> T1
+    P5 --> T2
+
+    T1 --> D1 --> O1
+    T1 --> D3
+    T2 --> D3
+
+    A1 --> A4
+    A1 --> D2
+    D2 --> T5
+    T5 --> O1
+    T5 --> O3
+
+    A2 --> A3 --> T7
+    T7 --> O3
+
+    A4 --> D3
+    D3 --> T6
+    T6 --> O2
+
+    P5 --> O4
 ```
 
 ---
