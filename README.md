@@ -150,9 +150,9 @@ graph TB
     end
 
     subgraph BE["⚙️ Backend API (Next.js)"]
-        API[REST API Routes]
-        SNAP[Snapshot Engine<br/>compute_portfolio_snapshot()]
-        CRON[Cron Scheduler<br/>01:00, 15:00, 15:45 UTC]
+        API["REST API Routes"]
+        SNAP["Snapshot Engine<br/>compute_portfolio_snapshot"]
+        CRON["Cron Scheduler<br/>01:00, 15:00, 15:45 UTC"]
     end
 
     subgraph DB["🗄️ Supabase PostgreSQL"]
