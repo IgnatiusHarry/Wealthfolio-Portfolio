@@ -40,7 +40,7 @@ sequenceDiagram
     par IDX Assets
         OC->>TV: Fetch .JK symbols
         TV-->>OC: Price data
-    else US Assets
+    and US Assets
         OC->>Poly: Fetch US symbols
         Poly-->>OC: Price data
     end
