@@ -211,8 +211,7 @@ Wealthfolio-Portfolio/
 ├── README.md                    ← You are here
 ├── architecture/
 │   ├── system-design.md         ← Full system overview
-│   ├── openclaw-vps.md          ← AI orchestration & market data
-│   └── data-pipeline.md         ← ETL pipeline details
+│   └── openclaw-vps.md          ← AI orchestration & market data
 ├── data-engineering/
 │   ├── schema.md                ← Database schema & ERD
 │   └── pipeline.md              ← Data transformation logic
