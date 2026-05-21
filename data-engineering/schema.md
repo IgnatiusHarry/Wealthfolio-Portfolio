@@ -72,7 +72,7 @@ erDiagram
 
     market_data {
         uuid id PK
-        uuid asset_id FK UNIQUE
+        uuid asset_id FK
         numeric price
         numeric price_change
         numeric price_change_pct
@@ -102,7 +102,7 @@ erDiagram
 
     portfolio_snapshot {
         uuid id PK
-        date date UNIQUE
+        date date
         numeric total_value
         numeric total_invested
         numeric investment_value
@@ -115,7 +115,7 @@ erDiagram
 
     wealth_ledger_daily {
         uuid id PK
-        date date UNIQUE
+        date date
         numeric total_value
         numeric total_invested
         numeric investment_value
