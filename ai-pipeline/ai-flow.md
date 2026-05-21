@@ -17,7 +17,7 @@ WealthFolio uses a **multi-stage AI pipeline** for two core functions:
 ```
 User (Discord): "makan siang di food court 85 NT"
          ↓
-NLP Parser (GPT-4o-mini)
+NLP Parser (GPT-5-mini)
          ↓
 Structured Output:
 {
@@ -155,7 +155,7 @@ const estimatedOutputTokens = estimateTokens('{"amount":85,"currency":"NTD",...}
 console.log(`Estimated tokens: ${estimatedInputTokens + estimatedOutputTokens}`);
 // Output: ~150-200 tokens for transaction parsing
 
-// Cost estimation (GPT-4o-mini pricing)
+// Cost estimation (GPT-5-mini pricing)
 const INPUT_COST_PER_1K = 0.00015;  // $0.15 per 1M tokens
 const OUTPUT_COST_PER_1K = 0.0006;  // $0.60 per 1M tokens
 
