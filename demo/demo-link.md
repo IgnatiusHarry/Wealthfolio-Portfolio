@@ -8,6 +8,8 @@
 
 ## What You Can See
 
+> Updated to match the latest WealthFolio feature set (May 2026 portfolio-docs sync).
+
 The live application showcases the full WealthFolio system. Note that the live app uses the owner's personal data — for a portfolio review, the sections below describe what each page demonstrates.
 
 | Page | What It Demonstrates |

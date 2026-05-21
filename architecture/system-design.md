@@ -6,7 +6,7 @@
 
 WealthFolio is designed as a **three-layer data platform**:
 
-1. **Ingestion Layer** — Multiple input channels (Telegram, web, CSV)
+1. **Ingestion Layer** — Multiple input channels (Discord, web, CSV)
 2. **Processing Layer** — AI parsing, FX normalization, daily snapshots
 3. **Presentation Layer** — Dashboard, AI insights, alerts
 
@@ -18,12 +18,12 @@ WealthFolio is designed as a **three-layer data platform**:
 graph TB
     subgraph Users["👤 User Interaction"]
         U1["Web Browser"]
-        U2["Telegram App"]
+        U2["Discord App"]
         U3["Discord Server"]
     end
 
     subgraph Ingestion["📥 Ingestion Layer"]
-        BOT["Telegram / Discord Bot<br/>Node.js"]
+        BOT["Discord Bot<br/>Node.js"]
         WEB["Web Dashboard<br/>Next.js 14"]
         CSV["CSV Importer"]
     end
@@ -114,7 +114,7 @@ graph TB
 ## Data Flow Summary
 
 ### Transaction Flow
-1. User submits transaction (Telegram/web/CSV)
+1. User submits transaction (Discord/web/CSV)
 2. Server validates input (`safeTable`, `safeOrder`)
 3. FX resolution: `fx_history` (historical) → `fx_rates` (latest) → 1.0
 4. Server computes `amount_idr = amount * fx_rate`

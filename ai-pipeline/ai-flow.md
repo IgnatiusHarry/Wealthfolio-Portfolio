@@ -15,7 +15,7 @@ WealthFolio uses a **multi-stage AI pipeline** for two core functions:
 ### Input → Output Flow
 
 ```
-User (Telegram): "makan siang di food court 85 NT"
+User (Discord): "makan siang di food court 85 NT"
          ↓
 NLP Parser (GPT-4o-mini)
          ↓
@@ -34,7 +34,7 @@ Validation Layer (duplicate check, range check)
          ↓
 INSERT INTO transactions
          ↓
-Telegram reply: "✅ NT$85 Food saved! Budget: 28% used today"
+Discord reply: "✅ NT$85 Food saved! Budget: 28% used today"
 ```
 
 ### Prompt Template (Production-Ready)
@@ -369,11 +369,11 @@ gantt
 | `fx-rate-refresh` | Hourly | Fetch latest FX rates from API | ~5s |
 | `portfolio-snapshot` | Daily 06:00 | Calculate portfolio value, store snapshot | ~10s |
 | `snapshot-backfill` | On deploy | Fill missing historical snapshots (30 days) | ~30s |
-| `daily-summary` | Daily 06:30 | Telegram message with yesterday's summary | ~10s |
+| `daily-summary` | Daily 06:30 | Discord message with yesterday's summary | ~10s |
 | `weekly-trend` | Monday 07:00 | 7-day spending vs previous 7 days comparison | ~15s |
 | `monthly-pnl` | 1st of month | Full P&L, savings rate, category breakdown | ~20s |
 
-### Sample Daily Summary (Dummy Telegram Message)
+### Sample Daily Summary (Dummy Discord Message)
 ```
 📊 WealthFolio Daily — April 22, 2024
 

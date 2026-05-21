@@ -13,7 +13,7 @@ INPUT → PARSE → VALIDATE → TRANSFORM → STORE → AGGREGATE → OUTPUT
 ```mermaid
 flowchart LR
     subgraph Input["📥 Ingestion Layer"]
-        A1["Telegram Bot Message<br/>'makan 85 NT'"]
+        A1["Discord Bot Message<br/>'makan 85 NT'"]
         A2["Web Form Entry"]
         A3["Bank CSV Upload"]
     end
@@ -50,7 +50,7 @@ flowchart LR
     subgraph Output["📤 Output"]
         G1["Dashboard KPIs"]
         G2["AI Insights"]
-        G3["Telegram confirmation"]
+        G3["Discord confirmation"]
     end
 
     subgraph MarketData["📈 Market Data Ingestion"]
@@ -101,7 +101,7 @@ flowchart LR
 
 ### 1. Transaction Ingestion
 
-**Input:** User submits transaction (Telegram, Web, CSV)
+**Input:** User submits transaction (Discord, Web, CSV)
 
 **Processing:**
 - Input validation via `safeTable()` and `safeOrder()` functions

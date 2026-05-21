@@ -28,4 +28,4 @@
 |---|---|
 | **[SQL Editor](sql-editor.png)** | Direct database query interface — run custom SQL against Supabase, export results |
 | **[Import / Export](import-export.png)** | Data management — CSV import/export, bulk operations, data migration tools |
-| **[Settings](settings.png)** | App configuration — privacy mode, theme toggle, Telegram integration, account management |
+| **[Settings](settings.png)** | App configuration — privacy mode, theme toggle, Discord integration, account management |

@@ -30,7 +30,7 @@ pages/api/
 ## Core Backend Flows
 
 - **Transaction Ingestion**
-  - Input channels: Telegram/web form/import
+  - Input channels: Discord/web form/import
   - Validation: allowlist + numeric/date checks
   - FX normalization: `fx_history` → `fx_rates` → fallback `1.0`
   - Persist to `transactions` with computed `amount_idr`

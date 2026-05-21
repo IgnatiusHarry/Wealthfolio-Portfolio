@@ -4,6 +4,8 @@
 
 ## Dashboard KPI Design
 
+> This analytics document is synced to the latest WealthFolio page modules: Dashboard, Cashflow, Portfolio, Health, Trading, Fees, Income, Goals, Wealth Growth, Insights, and Assistant.
+
 The dashboard is designed around 3 tiers of financial awareness:
 
 ```

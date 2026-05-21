@@ -23,7 +23,7 @@
 | | |
 |---|---|
 | **Problem** | Managing finances across multiple currencies (IDR, NTD, USD) with no unified visibility into spending, investments, and savings trends — resulting in poor cashflow control. |
-| **Solution** | Built a full-stack personal finance platform with automated data ingestion via Telegram bot, AI-powered categorization, multi-currency normalization, and real-time dashboard analytics. |
+| **Solution** | Built a full-stack personal finance platform with automated data ingestion via Discord bot, AI-powered categorization, multi-currency normalization, and real-time dashboard analytics. |
 | **Impact** | Reduced manual tracking time by **90%**, achieved **cumulative monthly buffer**, and built awareness of spending patterns. |
 
 ---
@@ -31,7 +31,7 @@
 ## 🏆 Key Achievements
 
 - ⚡ **Processes 3,000+ transactions** with sub-second query performance via optimized Supabase queries
-- 🤖 **AI auto-categorizes** transactions from natural language (Telegram: "makan siang 65 NTD")
+- 🤖 **AI auto-categorizes** transactions from natural language (Discord: "makan siang 65 NTD")
 - 🌏 **Multi-currency normalization** — IDR, NTD, USD, SGD all converted in real-time via `fx_history` + `fx_rates`
 - 📊 **Portfolio tracking** with P&L, unrealized gains, and daily snapshots via `compute_portfolio_snapshot()`
 - 🔔 **Automated alerts** when daily spending exceeds budget threshold
@@ -113,8 +113,8 @@ Supabase Realtime subscriptions:
 - Toast notification on data updates
 - Real-time sync counter in topbar
 
-### 🤖 Telegram Bot Integration
-Transaction input via Telegram:
+### 🤖 Discord Bot Integration
+Transaction input via Discord:
 - Natural language parsing ("makan siang 65 NTD")
 - Webhook-based architecture
 - Health monitoring with stale webhook detection
@@ -138,7 +138,7 @@ Transaction input via Telegram:
 ```mermaid
 graph TB
     subgraph Input["📥 Input Channels"]
-        TG[Telegram Bot]
+        TG[Discord Bot]
         WEB[Web Dashboard]
         CSV[Bank CSV Import]
     end
@@ -240,7 +240,7 @@ Wealthfolio-Portfolio/
 | **Database** | Supabase (PostgreSQL) | Data storage, real-time |
 | **AI** | GitHub Copilot (GPT-5-mini), OpenRouter (gemini-2.0-flash) | Insights, classification |
 | **Market Data** | TradingView (IDX), Polygon (US) | Price feeds |
-| **Bot** | Telegram Bot API | Transaction input |
+| **Bot** | Discord Bot API | Transaction input |
 | **Orchestration** | OpenClaw (VPS) | AI routing, market data jobs |
 | **Deploy** | Vercel | CI/CD, cron jobs, edge functions |
 
