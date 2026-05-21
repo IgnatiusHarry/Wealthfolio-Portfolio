@@ -134,13 +134,13 @@ erDiagram
     }
 
     accounts ||--o{ transactions : "has many"
-    investment_assets ||--o{ portfolio : "tracked in"
-    portfolio }o--|| market_data : "prices from"
-    investment_assets ||--o{ market_data : "has price"
-    portfolio }o--|| investment_assets : "references"
-    transactions --> fx_history : "fx_rate resolved from"
-    accounts --> fx_rates : "current valuation via"
-    portfolio_snapshot --> wealth_ledger_daily : "mirrored to"
+    investment_assets ||--o{ portfolio : "referenced by"
+    investment_assets ||--o{ market_data : "priced in"
+    portfolio ||--o{ investment_transactions : "updated by"
+    fx_history ||--o{ transactions : "rates used by"
+    fx_rates ||--o{ accounts : "valuation reference"
+    portfolio_snapshot ||--|| wealth_ledger_daily : "mirrored to"
+    ai_insights ||--|| portfolio_snapshot : "generated from context"
 ```
 
 ---
