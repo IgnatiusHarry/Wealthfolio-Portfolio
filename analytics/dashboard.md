@@ -58,7 +58,7 @@ pie title Investment Allocation (Rp 1,060,000,000)
 
 ## Sample AI-Generated Insights (Dummy)
 
-These are **example outputs** from the Quantfolio AI system:
+These are **example outputs** from the WealthFolio AI system:
 
 > 📊 **Portfolio Health Score: 7.5/10** — Strong performance with moderate concentration risk in tech stocks.
 

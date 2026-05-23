@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>WealthFolio LinkedIn Carousel</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px;
+  }
+
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* ============================================
+     SHARED DESIGN SYSTEM
+  ============================================ */
+  :root {
+    --cream: #F5F1E8;
+    --ink: #0D0D0F;
+    --accent: #4A6CF7;
+    --accent2: #7C3AED;
+    --warm: #E8845A;
+    --gold: #D4A853;
+    --mint: #2DD4BF;
+    --bg-dark: #0D0F1A;
+    --bg-card: #141622;
+    --border: rgba(255,255,255,0.08);
+    --text-muted: rgba(255,255,255,0.45);
+    --text-mid: rgba(255,255,255,0.72);
+  }
+
+  /* ============================================
+     SLIDE 1 — HOOK (Dark, Bold)
+  ============================================ */
+  .s1 {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px;
+  }
+  .s1::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,108,247,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .s1::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .s1 .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(74,108,247,0.4);
+    background: rgba(74,108,247,0.08);
+    color: #7B96F8;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 100px;
+    margin-bottom: 48px;
+    width: fit-content;
+  }
+  .s1 .tag-dot {
+    width: 6px; height: 6px;
+    background: #4A6CF7;
+    border-radius: 50%;
+  }
+  .s1 h1 {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 36px;
+    letter-spacing: -0.02em;
+  }
+  .s1 h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #4A6CF7, #7C3AED, #E8845A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .s1 .sub {
+    font-size: 22px;
+    color: var(--text-mid);
+    line-height: 1.55;
+    max-width: 780px;
+    margin-bottom: 64px;
+    font-weight: 300;
+  }
+  .s1 .chips {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .s1 .chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'DM Mono', monospace;
+  }
+  .s1 .slide-num {
+    position: absolute;
+    bottom: 48px; right: 56px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+  .s1 .brand {
+    position: absolute;
+    bottom: 48px; left: 56px;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ============================================
+     SLIDE 2 — WHY I BUILT THIS
+  ============================================ */
+  .s2 {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px;
+  }
+  .s2 .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #4A6CF7;
+    margin-bottom: 24px;
+  }
+  .s2 h2 {
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 56px;
+  }
+  .s2 .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .s2 .problem-card {
+    background: white;
+    border: 1px solid rgba(13,13,15,0.1);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .s2 .problem-card .icon-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .s2 .problem-card .icon-box {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .s2 .problem-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .s2 .problem-card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .s2 .solution-bar {
+    background: var(--ink);
+    color: white;
+    border-radius: 16px;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .s2 .solution-bar .arrow-box {
+    width: 44px; height: 44px;
+    background: #4A6CF7;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .s2 .solution-bar p {
+    font-size: 17px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+  }
+  .s2 .solution-bar strong { color: white; font-weight: 600; }
+  .s2 .slide-num { position: absolute; bottom: 48px; right: 56px; font-size: 13px; color: #999; font-family: 'DM Mono', monospace; }
+  .s2 .brand { position: absolute; bottom: 48px; left: 56px; font-size: 13px; color: #999; }
+
+  /* ============================================
+     SLIDE 3 — ARCHITECTURE
+  ============================================ */
+  .s3 {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    padding: 64px 72px;
+  }
+  .s3::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: 
+      radial-gradient(ellipse 400px 400px at 80% 20%, rgba(74,108,247,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 300px 300px at 10% 80%, rgba(124,58,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .s3 .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #4A6CF7; margin-bottom: 16px;
+  }
+  .s3 h2 {
+    font-size: 38px; font-weight: 700; color: white; letter-spacing: -0.02em;
+    margin-bottom: 48px;
+  }
+  .s3 .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    flex: 1;
+    align-items: stretch;
+  }
+  .s3 .arch-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+  .s3 .arch-col:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .s3 .arch-col-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 20px; text-align: center;
+  }
+  .s3 .arch-node {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .s3 .arch-node.highlight {
+    border-color: rgba(74,108,247,0.4);
+    background: rgba(74,108,247,0.08);
+  }
+  .s3 .arch-node.highlight2 {
+    border-color: rgba(124,58,237,0.4);
+    background: rgba(124,58,237,0.08);
+  }
+  .s3 .arch-node.highlight3 {
+    border-color: rgba(45,212,191,0.4);
+    background: rgba(45,212,191,0.06);
+  }
+  .s3 .arch-node .node-icon { font-size: 20px; margin-bottom: 6px; }
+  .s3 .arch-node .node-name { font-size: 13px; font-weight: 600; color: white; }
+  .s3 .arch-node .node-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+  .s3 .arch-arrow {
+    color: var(--text-muted); font-size: 16px; margin: 4px 0; line-height: 1;
+  }
+  .s3 .slide-num { position: absolute; bottom: 36px; right: 56px; font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .s3 .brand { position: absolute; bottom: 36px; left: 56px; font-size: 13px; color: var(--text-muted); }
+
+  /* ============================================
+     SLIDE 4 — TECH STACK
+  ============================================ */
+  .s4 {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    padding: 64px 72px;
+  }
+  .s4::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 500px 500px at 90% 10%, rgba(212,168,83,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .s4 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #D4A853; margin-bottom: 16px; }
+  .s4 h2 { font-size: 38px; font-weight: 700; color: white; letter-spacing: -0.02em; margin-bottom: 40px; }
+  .s4 .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    flex: 1;
+  }
+  .s4 .stack-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .s4 .stack-card .layer-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 6px; width: fit-content;
+  }
+  .s4 .stack-card h3 { font-size: 18px; font-weight: 700; color: white; }
+  .s4 .stack-card p { font-size: 13px; color: var(--text-mid); line-height: 1.5; font-weight: 300; }
+  .s4 .stack-card .tech-pills {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+  }
+  .s4 .stack-card .tech-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+  }
+  .s4 .slide-num { position: absolute; bottom: 36px; right: 56px; font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .s4 .brand { position: absolute; bottom: 36px; left: 56px; font-size: 13px; color: var(--text-muted); }
+
+  /* ============================================
+     SLIDE 5 — PIPELINE WORKFLOW
+  ============================================ */
+  .s5 {
+    background: #0A0C14;
+    display: flex;
+    flex-direction: column;
+    padding: 64px 72px;
+  }
+  .s5 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #2DD4BF; margin-bottom: 16px; }
+  .s5 h2 { font-size: 38px; font-weight: 700; color: white; letter-spacing: -0.02em; margin-bottom: 40px; }
+  .s5 .pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+  }
+  .s5 .pipeline-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .s5 .step-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 56px;
+    flex-shrink: 0;
+  }
+  .s5 .step-circle {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .s5 .step-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin: 4px 0;
+  }
+  .s5 .step-content {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-left: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .s5 .step-content-inner { flex: 1; }
+  .s5 .step-content h3 { font-size: 15px; font-weight: 600; color: white; margin-bottom: 4px; }
+  .s5 .step-content p { font-size: 13px; color: var(--text-mid); line-height: 1.5; font-weight: 300; }
+  .s5 .step-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #2DD4BF;
+    background: rgba(45,212,191,0.08);
+    border: 1px solid rgba(45,212,191,0.15);
+    border-radius: 8px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .s5 .slide-num { position: absolute; bottom: 36px; right: 56px; font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .s5 .brand { position: absolute; bottom: 36px; left: 56px; font-size: 13px; color: var(--text-muted); }
+
+  /* ============================================
+     SLIDE 6 — AI LAYER
+  ============================================ */
+  .s6 {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    padding: 64px 72px;
+  }
+  .s6::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 600px 400px at 50% 60%, rgba(124,58,237,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .s6 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #A78BFA; margin-bottom: 16px; }
+  .s6 h2 { font-size: 38px; font-weight: 700; color: white; letter-spacing: -0.02em; margin-bottom: 40px; }
+  .s6 .ai-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+  }
+  .s6 .ai-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .s6 .ai-panel.featured {
+    border-color: rgba(124,58,237,0.35);
+    background: rgba(124,58,237,0.06);
+  }
+  .s6 .ai-panel-title {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .s6 .ai-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .s6 .ai-panel h3 { font-size: 17px; font-weight: 700; color: white; }
+  .s6 .ai-panel .ai-sub { font-size: 13px; color: var(--text-muted); margin-top: -4px; }
+  .s6 .ai-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .s6 .ai-step:last-child { border-bottom: none; }
+  .s6 .ai-step-num {
+    width: 24px; height: 24px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .s6 .ai-step h4 { font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .s6 .ai-step p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .s6 .ai-metric-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .s6 .ai-metric {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .s6 .ai-metric .val { font-size: 20px; font-weight: 700; color: white; }
+  .s6 .ai-metric .lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .s6 .slide-num { position: absolute; bottom: 36px; right: 56px; font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .s6 .brand { position: absolute; bottom: 36px; left: 56px; font-size: 13px; color: var(--text-muted); }
+
+  /* ============================================
+     SLIDE 7 — CHALLENGES & SOLUTIONS
+  ============================================ */
+  .s7 {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    padding: 72px 80px;
+  }
+  .s7 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #E8845A; margin-bottom: 20px; }
+  .s7 h2 { font-size: 48px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 48px; }
+  .s7 .challenge-list { display: flex; flex-direction: column; gap: 20px; }
+  .s7 .challenge-row {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 0; align-items: center;
+    background: white;
+    border: 1px solid rgba(13,13,15,0.1);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .s7 .chal-side {
+    padding: 22px 24px;
+  }
+  .s7 .chal-side.problem-side {
+    background: #FFF5F0;
+    border-right: 1px solid rgba(13,13,15,0.06);
+  }
+  .s7 .chal-side.solution-side {
+    background: white;
+    border-left: 1px solid rgba(13,13,15,0.06);
+  }
+  .s7 .chal-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
+  .s7 .chal-label.p { color: #E8845A; }
+  .s7 .chal-label.s { color: #4A6CF7; }
+  .s7 .chal-text { font-size: 14px; color: #333; line-height: 1.5; font-weight: 400; }
+  .s7 .arrow-divider {
+    width: 52px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    color: #ccc;
+    flex-shrink: 0;
+  }
+  .s7 .slide-num { position: absolute; bottom: 48px; right: 56px; font-size: 13px; color: #999; font-family: 'DM Mono', monospace; }
+  .s7 .brand { position: absolute; bottom: 48px; left: 56px; font-size: 13px; color: #999; }
+
+  /* ============================================
+     SLIDE 8 — ENGINEERING TAKEAWAYS
+  ============================================ */
+  .s8 {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    padding: 72px 80px;
+  }
+  .s8::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 500px 500px at 80% 80%, rgba(74,108,247,0.09) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .s8 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #4A6CF7; margin-bottom: 20px; }
+  .s8 h2 { font-size: 48px; font-weight: 700; color: white; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .s8 .h2-sub { font-size: 18px; color: var(--text-muted); margin-bottom: 48px; font-weight: 300; }
+  .s8 .takeaway-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    flex: 1;
+  }
+  .s8 .takeaway-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+  .s8 .takeaway-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .s8 .takeaway-card.c1::before { background: #4A6CF7; }
+  .s8 .takeaway-card.c2::before { background: #2DD4BF; }
+  .s8 .takeaway-card.c3::before { background: #E8845A; }
+  .s8 .takeaway-card.c4::before { background: #7C3AED; }
+  .s8 .check {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .s8 .takeaway-card h3 { font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
+  .s8 .takeaway-card p { font-size: 13px; color: var(--text-mid); line-height: 1.55; font-weight: 300; }
+  .s8 .slide-num { position: absolute; bottom: 36px; right: 56px; font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .s8 .brand { position: absolute; bottom: 36px; left: 56px; font-size: 13px; color: var(--text-muted); }
+
+  /* ============================================
+     SLIDE 9 — LESSONS LEARNED
+  ============================================ */
+  .s9 {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    padding: 80px;
+    justify-content: center;
+  }
+  .s9 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #4A6CF7; margin-bottom: 24px; }
+  .s9 h2 { font-size: 48px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 48px; }
+  .s9 .lessons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+  .s9 .lesson {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px 24px;
+    background: white;
+    border: 1px solid rgba(13,13,15,0.08);
+    border-radius: 14px;
+  }
+  .s9 .lesson-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    color: #4A6CF7;
+    font-family: 'DM Mono', monospace;
+    min-width: 32px;
+    padding-top: 2px;
+  }
+  .s9 .lesson-text { font-size: 16px; color: #222; line-height: 1.5; }
+  .s9 .lesson-text strong { font-weight: 700; color: var(--ink); }
+  .s9 .pull-quote {
+    border-left: 3px solid #4A6CF7;
+    padding: 16px 24px;
+    background: rgba(74,108,247,0.04);
+    border-radius: 0 12px 12px 0;
+  }
+  .s9 .pull-quote p { font-size: 18px; color: #333; line-height: 1.6; font-style: italic; font-weight: 300; }
+  .s9 .slide-num { position: absolute; bottom: 48px; right: 56px; font-size: 13px; color: #999; font-family: 'DM Mono', monospace; }
+  .s9 .brand { position: absolute; bottom: 48px; left: 56px; font-size: 13px; color: #999; }
+
+  /* ============================================
+     SLIDE 10 — CLOSING
+  ============================================ */
+  .s10 {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px;
+  }
+  .s10::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 500px 500px at 20% 50%, rgba(74,108,247,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 400px 400px at 85% 30%, rgba(124,58,237,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .s10 .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(74,108,247,0.4);
+    background: rgba(74,108,247,0.08);
+    color: #7B96F8;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 8px 18px; border-radius: 100px;
+    margin-bottom: 48px;
+  }
+  .s10 .closing-quote {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: white;
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
+    max-width: 880px;
+  }
+  .s10 .closing-quote em {
+    font-style: normal;
+    background: linear-gradient(135deg, #4A6CF7, #7C3AED);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .s10 .closing-sub {
+    font-size: 20px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    max-width: 760px;
+    margin-bottom: 72px;
+    font-weight: 300;
+  }
+  .s10 .bottom-row {
+    display: flex; align-items: center; gap: 32px;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    width: 100%;
+  }
+  .s10 .author-info { flex: 1; }
+  .s10 .author-name { font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .s10 .author-role { font-size: 14px; color: var(--text-muted); }
+  .s10 .links {
+    display: flex; gap: 12px;
+  }
+  .s10 .link-badge {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+  }
+  .s10 .slide-num { position: absolute; bottom: 48px; right: 56px; font-size: 13px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+</style>
+</head>
+<body>
+
+<!-- ====================================================
+     SLIDE 1 — HOOK
+==================================================== -->
+<div class="slide s1" id="slide-1">
+  <div class="tag">
+    <div class="tag-dot"></div>
+    End-to-End Data Engineering
+  </div>
+  <h1>I Built a Full-Stack<br><em>Wealth Analytics</em><br>Platform from Scratch</h1>
+  <p class="sub">
+    From Discord messages to AI-powered insights — multi-currency tracking,
+    automated pipelines, and real-time dashboards. Here's how it works.
+  </p>
+  <div class="chips">
+    <span class="chip">Next.js 14</span>
+    <span class="chip">Supabase / PostgreSQL</span>
+    <span class="chip">GPT-5-mini</span>
+    <span class="chip">Vercel Cron</span>
+    <span class="chip">Discord Bot</span>
+    <span class="chip">Multi-Currency ETL</span>
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">01 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 2 — WHY I BUILT THIS
+==================================================== -->
+<div class="slide s2" id="slide-2">
+  <div class="section-label">Problem Statement</div>
+  <h2>Managing money across<br>3 currencies is chaos.</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon-row">
+        <div class="icon-box" style="background:#FFF0EA">🌏</div>
+        <h3>No unified visibility</h3>
+      </div>
+      <p>IDR, NTD, and USD scattered across different accounts with no single source of truth for net worth or cashflow.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon-row">
+        <div class="icon-box" style="background:#EEF2FF">⏱️</div>
+        <h3>Manual tracking waste</h3>
+      </div>
+      <p>Spending hours each month reconciling spreadsheets instead of acting on insights.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon-row">
+        <div class="icon-box" style="background:#F0FFF4">📊</div>
+        <h3>No portfolio analytics</h3>
+      </div>
+      <p>No way to track unrealized P&amp;L, rebalancing needs, or portfolio health across IDX and US markets simultaneously.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon-row">
+        <div class="icon-box" style="background:#FDF4FF">🤖</div>
+        <h3>Zero behavioral insights</h3>
+      </div>
+      <p>Raw numbers without context can't drive better financial decisions. Needed AI that understands patterns.</p>
+    </div>
+  </div>
+  <div class="solution-bar">
+    <div class="arrow-box">→</div>
+    <p>Built <strong>WealthFolio</strong> — a personal finance intelligence system with automated ingestion, AI categorization, multi-currency normalization, and real-time portfolio analytics. Result: <strong>90% reduction in manual tracking time.</strong></p>
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">02 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 3 — ARCHITECTURE
+==================================================== -->
+<div class="slide s3" id="slide-3">
+  <div class="section-label">System Architecture</div>
+  <h2>Five layers. One coherent system.</h2>
+  <div class="arch-grid">
+    <!-- Col 1: Input -->
+    <div class="arch-col">
+      <div class="arch-col-label">Ingestion</div>
+      <div class="arch-node highlight">
+        <div class="node-icon">🤖</div>
+        <div class="node-name">Discord Bot</div>
+        <div class="node-sub">Natural language input</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node highlight">
+        <div class="node-icon">🌐</div>
+        <div class="node-name">Web Dashboard</div>
+        <div class="node-sub">Manual entry &amp; import</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node highlight">
+        <div class="node-icon">📄</div>
+        <div class="node-name">CSV Import</div>
+        <div class="node-sub">Bulk bank data</div>
+      </div>
+    </div>
+    <!-- Col 2: AI -->
+    <div class="arch-col">
+      <div class="arch-col-label">AI Layer</div>
+      <div class="arch-node highlight2">
+        <div class="node-icon">🧠</div>
+        <div class="node-name">NLP Parser</div>
+        <div class="node-sub">GPT-5-mini structured output</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node highlight2">
+        <div class="node-icon">🏷️</div>
+        <div class="node-name">Auto-Classifier</div>
+        <div class="node-sub">Food · Transport · Rent</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node highlight2">
+        <div class="node-icon">💡</div>
+        <div class="node-name">WealthFolio AI</div>
+        <div class="node-sub">Daily insight generation</div>
+      </div>
+    </div>
+    <!-- Col 3: Storage -->
+    <div class="arch-col">
+      <div class="arch-col-label">Data &amp; Orchestration</div>
+      <div class="arch-node">
+        <div class="node-icon">🗄️</div>
+        <div class="node-name">Supabase</div>
+        <div class="node-sub">PostgreSQL + Realtime</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node">
+        <div class="node-icon">⏱️</div>
+        <div class="node-name">Vercel Cron</div>
+        <div class="node-sub">Snapshot &amp; AI refresh</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node">
+        <div class="node-icon">🖥️</div>
+        <div class="node-name">OpenClaw VPS</div>
+        <div class="node-sub">Market data &amp; FX jobs</div>
+      </div>
+    </div>
+    <!-- Col 4: Output -->
+    <div class="arch-col">
+      <div class="arch-col-label">Output</div>
+      <div class="arch-node highlight3">
+        <div class="node-icon">📈</div>
+        <div class="node-name">Portfolio Dashboard</div>
+        <div class="node-sub">Real-time KPIs &amp; charts</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node highlight3">
+        <div class="node-icon">🏥</div>
+        <div class="node-name">Health Score</div>
+        <div class="node-sub">6-dimension diagnostics</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-node highlight3">
+        <div class="node-icon">🔔</div>
+        <div class="node-name">Discord Alerts</div>
+        <div class="node-sub">Daily summaries &amp; budget</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+    <span class="chip">/api/insert-transaction</span>
+    <span class="chip">/api/portfolio-snapshot</span>
+    <span class="chip">/api/ai-insights</span>
+    <span class="chip">Supabase Realtime</span>
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">03 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 4 — TECH STACK
+==================================================== -->
+<div class="slide s4" id="slide-4">
+  <div class="section-label">Tech Stack</div>
+  <h2>Every layer, intentionally chosen.</h2>
+  <div class="stack-grid">
+
+    <div class="stack-card">
+      <div class="layer-badge" style="background:rgba(74,108,247,0.12);color:#7B96F8;">Frontend</div>
+      <h3>Next.js 14</h3>
+      <p>App Router, Server Components, API Routes. Mobile-first responsive design with a glassmorphism dark UI.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">React</span>
+        <span class="tech-pill">Recharts</span>
+        <span class="tech-pill">CSS Variables</span>
+      </div>
+    </div>
+
+    <div class="stack-card">
+      <div class="layer-badge" style="background:rgba(45,212,191,0.12);color:#2DD4BF;">Database</div>
+      <h3>Supabase / PostgreSQL</h3>
+      <p>12 relational tables, real-time subscriptions, Row-Level Security, and custom SQL functions for snapshots.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">PostgreSQL</span>
+        <span class="tech-pill">Realtime</span>
+        <span class="tech-pill">RLS</span>
+      </div>
+    </div>
+
+    <div class="stack-card">
+      <div class="layer-badge" style="background:rgba(124,58,237,0.12);color:#A78BFA;">AI / LLM</div>
+      <h3>GPT-5-mini + OpenRouter</h3>
+      <p>Structured output via function calling for transaction parsing. Provider fallback chain for zero downtime.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">Function Calling</span>
+        <span class="tech-pill">Gemini Flash</span>
+        <span class="tech-pill">Prompt Eng.</span>
+      </div>
+    </div>
+
+    <div class="stack-card">
+      <div class="layer-badge" style="background:rgba(212,168,83,0.12);color:#D4A853;">Market Data</div>
+      <h3>TradingView + Polygon</h3>
+      <p>IDX stocks via TradingView, US equities via Polygon API. Upsert pattern with graceful degradation on failures.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">IDX / US</span>
+        <span class="tech-pill">UPSERT SQL</span>
+        <span class="tech-pill">FX History</span>
+      </div>
+    </div>
+
+    <div class="stack-card">
+      <div class="layer-badge" style="background:rgba(232,132,90,0.12);color:#E8845A;">Orchestration</div>
+      <h3>Vercel Cron + VPS</h3>
+      <p>Scheduled jobs at 01:00, 15:00, 15:45 UTC. OpenClaw VPS handles market data ingestion and FX refresh.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">Cron Jobs</span>
+        <span class="tech-pill">Edge Functions</span>
+        <span class="tech-pill">Auto-deploy</span>
+      </div>
+    </div>
+
+    <div class="stack-card">
+      <div class="layer-badge" style="background:rgba(45,212,191,0.12);color:#2DD4BF;">Ingestion</div>
+      <h3>Discord Bot API</h3>
+      <p>Natural language transaction input via Discord. Webhook-based with stale detection and health monitoring.</p>
+      <div class="tech-pills">
+        <span class="tech-pill">Discord API</span>
+        <span class="tech-pill">Webhooks</span>
+        <span class="tech-pill">NLP → SQL</span>
+      </div>
+    </div>
+
+  </div>
+  <div style="margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+    <div class="stack-card" style="padding:12px 14px;"><p style="font-size:11px;color:var(--text-muted);">Cron Schedule</p><h3 style="font-size:14px;">01:00 / 15:00 / 15:45 UTC</h3></div>
+    <div class="stack-card" style="padding:12px 14px;"><p style="font-size:11px;color:var(--text-muted);">Data Quality</p><h3 style="font-size:14px;">Dedup + FX fallback chain</h3></div>
+    <div class="stack-card" style="padding:12px 14px;"><p style="font-size:11px;color:var(--text-muted);">Reliability</p><h3 style="font-size:14px;">Provider fallback + retry</h3></div>
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">04 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 5 — PIPELINE
+==================================================== -->
+<div class="slide s5" id="slide-5">
+  <div class="section-label">ETL Pipeline</div>
+  <h2>From raw input to structured insight.</h2>
+  <div class="pipeline">
+
+    <div class="pipeline-step">
+      <div class="step-num-col">
+        <div class="step-circle" style="background:rgba(74,108,247,0.15);color:#4A6CF7;">01</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-content-inner">
+          <h3>Ingestion &amp; NLP Parsing</h3>
+          <p>Discord message or web input hits the API. GPT-5-mini with structured JSON function calling extracts amount, currency, category, and confidence score.</p>
+        </div>
+        <div class="step-code">"makan 85 NTD" → JSON</div>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-num-col">
+        <div class="step-circle" style="background:rgba(45,212,191,0.15);color:#2DD4BF;">02</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-content-inner">
+          <h3>FX Resolution &amp; Normalization</h3>
+          <p>3-tier fallback: historical fx_history → latest fx_rates → 1.0 with warning. All amounts normalized to IDR base currency server-side.</p>
+        </div>
+        <div class="step-code">fx_history → fx_rates → 1.0</div>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-num-col">
+        <div class="step-circle" style="background:rgba(212,168,83,0.15);color:#D4A853;">03</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-content-inner">
+          <h3>Validation &amp; Deduplication</h3>
+          <p>safeTable() and safeOrder() allowlists prevent injection. 24h window duplicate detection by amount + description before inserting.</p>
+        </div>
+        <div class="step-code">INSERT + dedup check</div>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-num-col">
+        <div class="step-circle" style="background:rgba(124,58,237,0.15);color:#A78BFA;">04</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-content-inner">
+          <h3>Daily Snapshot Computation</h3>
+          <p>compute_portfolio_snapshot() aggregates holdings + cash accounts. Results upsert to portfolio_snapshot and mirror to wealth_ledger_daily for audit.</p>
+        </div>
+        <div class="step-code">CRON 15:00 UTC</div>
+      </div>
+    </div>
+
+    <div class="pipeline-step">
+      <div class="step-num-col">
+        <div class="step-circle" style="background:rgba(45,212,191,0.15);color:#2DD4BF;">05</div>
+        <div class="step-line" style="opacity:0;"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-content-inner">
+          <h3>AI Context Build &amp; Insight Refresh</h3>
+          <p>getPortfolioContext() aggregates accounts + holdings + transactions into a prompt. WealthFolio AI rotates analytical lens daily (CFO, behavioral, anomaly, predictive).</p>
+        </div>
+        <div class="step-code">CRON 01:00 UTC</div>
+      </div>
+    </div>
+
+  </div>
+  <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+    <div class="step-code">safeTable() / safeOrder()</div>
+    <div class="step-code">UPSERT market_data</div>
+    <div class="step-code">mirror → wealth_ledger_daily</div>
+    <div class="step-code">RLS + server-only keys</div>
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">05 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 6 — AI LAYER
+==================================================== -->
+<div class="slide s6" id="slide-6">
+  <div class="section-label">AI & Analytics Layer</div>
+  <h2>Two AI pipelines. One financial brain.</h2>
+  <div class="ai-two-col">
+
+    <!-- Left panel: Transaction parsing -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">
+        <div class="ai-icon" style="background:rgba(74,108,247,0.15);">🏷️</div>
+        <div>
+          <h3>Transaction Parser</h3>
+          <div class="ai-sub">NLP → Structured Data</div>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(74,108,247,0.15);color:#7B96F8;">1</div>
+        <div>
+          <h4>User sends natural language</h4>
+          <p>"makan siang di food court 85 NT" via Discord</p>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(74,108,247,0.15);color:#7B96F8;">2</div>
+        <div>
+          <h4>Function calling with schema</h4>
+          <p>GPT-5-mini returns structured JSON with amount, currency, category, type, confidence (0–1)</p>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(74,108,247,0.15);color:#7B96F8;">3</div>
+        <div>
+          <h4>Validation + fallback</h4>
+          <p>Rule-based classifier as backup if AI fails. Exponential backoff retry (1s → 2s → 4s)</p>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(74,108,247,0.15);color:#7B96F8;">4</div>
+        <div>
+          <h4>DB insert + Discord reply</h4>
+          <p>"✅ NT$85 Food saved! Budget: 28% used today"</p>
+        </div>
+      </div>
+      <div class="ai-metric-grid">
+        <div class="ai-metric">
+          <div class="val" style="color:#7B96F8;">0.97</div>
+          <div class="lbl">Avg. confidence</div>
+        </div>
+        <div class="ai-metric">
+          <div class="val" style="color:#7B96F8;">~150</div>
+          <div class="lbl">Tokens / parse</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right panel: WealthFolio AI -->
+    <div class="ai-panel featured">
+      <div class="ai-panel-title">
+        <div class="ai-icon" style="background:rgba(124,58,237,0.2);">💡</div>
+        <div>
+          <h3>WealthFolio AI</h3>
+          <div class="ai-sub">Daily Insight Engine</div>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(124,58,237,0.2);color:#A78BFA;">1</div>
+        <div>
+          <h4>Context builder aggregates data</h4>
+          <p>Portfolio holdings, account balances, recent transactions, FX rates — all merged into one context window</p>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(124,58,237,0.2);color:#A78BFA;">2</div>
+        <div>
+          <h4>Deterministic weekly lens rotation</h4>
+          <p>Mon: behavioral · Tue: CFO · Wed: anomaly · Thu: portfolio-doctor · Fri: predictive</p>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(124,58,237,0.2);color:#A78BFA;">3</div>
+        <div>
+          <h4>Provider fallback chain</h4>
+          <p>Copilot (GPT-5-mini) → OpenRouter (Gemini Flash) → free fallback models</p>
+        </div>
+      </div>
+      <div class="ai-step">
+        <div class="ai-step-num" style="background:rgba(124,58,237,0.2);color:#A78BFA;">4</div>
+        <div>
+          <h4>Response caching (4h TTL)</h4>
+          <p>SHA-256 cache key per user + date. Reduces costs and improves dashboard latency</p>
+        </div>
+      </div>
+      <div class="ai-metric-grid">
+        <div class="ai-metric">
+          <div class="val" style="color:#A78BFA;">7</div>
+          <div class="lbl">Analytical lenses</div>
+        </div>
+        <div class="ai-metric">
+          <div class="val" style="color:#A78BFA;">300</div>
+          <div class="lbl">Max output tokens</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">06 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 7 — CHALLENGES & SOLUTIONS
+==================================================== -->
+<div class="slide s7" id="slide-7">
+  <div class="section-label">Challenges &amp; Solutions</div>
+  <h2>Hard problems, real solutions.</h2>
+  <div class="challenge-list">
+
+    <div class="challenge-row">
+      <div class="chal-side problem-side">
+        <div class="chal-label p">Challenge</div>
+        <div class="chal-text">Historical FX rates weren't always available for the exact transaction date</div>
+      </div>
+      <div class="arrow-divider">→</div>
+      <div class="chal-side solution-side">
+        <div class="chal-label s">Solution</div>
+        <div class="chal-text">3-tier fallback chain: fx_history (exact date) → fx_rates (latest) → 1.0 + warning log</div>
+      </div>
+    </div>
+
+    <div class="challenge-row">
+      <div class="chal-side problem-side">
+        <div class="chal-label p">Challenge</div>
+        <div class="chal-text">AI-generated insights became repetitive and predictable over time</div>
+      </div>
+      <div class="arrow-divider">→</div>
+      <div class="chal-side solution-side">
+        <div class="chal-label s">Solution</div>
+        <div class="chal-text">Deterministic daily lens rotation (7 analytical perspectives, e.g., CFO mode, anomaly detection)</div>
+      </div>
+    </div>
+
+    <div class="challenge-row">
+      <div class="chal-side problem-side">
+        <div class="chal-label p">Challenge</div>
+        <div class="chal-text">Market data APIs would fail intermittently, wiping portfolio valuation</div>
+      </div>
+      <div class="arrow-divider">→</div>
+      <div class="chal-side solution-side">
+        <div class="chal-label s">Solution</div>
+        <div class="chal-text">Graceful degradation: skip failed assets, keep existing data. Never DELETE on API error</div>
+      </div>
+    </div>
+
+    <div class="challenge-row">
+      <div class="chal-side problem-side">
+        <div class="chal-label p">Challenge</div>
+        <div class="chal-text">Dashboard privacy — showing sensitive amounts in public spaces</div>
+      </div>
+      <div class="arrow-divider">→</div>
+      <div class="chal-side solution-side">
+        <div class="chal-label s">Solution</div>
+        <div class="chal-text">Optimistic UI privacy toggle — blur all amounts instantly, sync to server in background with no flicker</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">07 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 8 — ENGINEERING TAKEAWAYS
+==================================================== -->
+<div class="slide s8" id="slide-8">
+  <div class="section-label">Key Engineering Takeaways</div>
+  <h2>What this project reinforced.</h2>
+  <div class="h2-sub">Principles that show up in every serious data system</div>
+  <div class="takeaway-grid">
+
+    <div class="takeaway-card c1">
+      <div class="check" style="background:rgba(74,108,247,0.15);">✓</div>
+      <div>
+        <h3>Reliability over cleverness</h3>
+        <p>Fallback chains, retry with backoff, and graceful degradation matter more than clever architecture. Systems fail — design for it explicitly.</p>
+      </div>
+    </div>
+
+    <div class="takeaway-card c2">
+      <div class="check" style="background:rgba(45,212,191,0.15);">✓</div>
+      <div>
+        <h3>Normalize data at ingestion time</h3>
+        <p>Computing amount_idr server-side at write time — not at read time — is the difference between fast queries and slow ones at scale.</p>
+      </div>
+    </div>
+
+    <div class="takeaway-card c3">
+      <div class="check" style="background:rgba(232,132,90,0.15);">✓</div>
+      <div>
+        <h3>AI is a pipeline component, not magic</h3>
+        <p>LLMs need input validation, output schemas, fallback classifiers, caching, and cost controls — just like any other service in your stack.</p>
+      </div>
+    </div>
+
+    <div class="takeaway-card c4">
+      <div class="check" style="background:rgba(124,58,237,0.15);">✓</div>
+      <div>
+        <h3>Observability from day one</h3>
+        <p>Dual-sink writes (portfolio_snapshot + wealth_ledger_daily), freshness SLAs via last_updated_at, and reconciliation cron jobs — not afterthoughts.</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">08 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 9 — LESSONS LEARNED
+==================================================== -->
+<div class="slide s9" id="slide-9">
+  <div class="section-label">Lessons Learned</div>
+  <h2>What building this actually taught me.</h2>
+  <div class="lessons">
+    <div class="lesson">
+      <div class="lesson-num">01</div>
+      <div class="lesson-text"><strong>Clean schema design saves more time than any optimization.</strong> Getting the FX normalization model right early meant never rewriting the query layer.</div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">02</div>
+      <div class="lesson-text"><strong>Prompt engineering is software engineering.</strong> The NLP parser works because the system prompt is structured, tested, and versioned — not because GPT-5-mini is magic.</div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">03</div>
+      <div class="lesson-text"><strong>Real-time UX requires explicit tradeoffs.</strong> Optimistic updates, Supabase Realtime subscriptions, and background syncs each solve different user experience problems.</div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">04</div>
+      <div class="lesson-text"><strong>Automation surfaces data quality issues fast.</strong> Running the snapshot cron the first week revealed 3 normalization bugs that would have been invisible in a manual workflow.</div>
+    </div>
+  </div>
+  <div class="pull-quote">
+    <p>Building end-to-end systems taught me that architecture decisions at the data layer ripple through every layer above it — and fixing them later costs 10× more.</p>
+  </div>
+  <div class="brand">@ignatiusharry</div>
+  <div class="slide-num">09 / 10</div>
+</div>
+
+<!-- ====================================================
+     SLIDE 10 — CLOSING
+==================================================== -->
+<div class="slide s10" id="slide-10">
+  <div class="tag">
+    <span>💬</span> Engineering Insight
+  </div>
+  <div class="closing-quote">
+    The most interesting part<br>of building <em>AI systems</em><br>isn't the model.
+  </div>
+  <p class="closing-sub">
+    It's the data pipelines feeding it. The validation layer protecting it.
+    The fallback logic carrying it when it fails. The schema that makes the
+    whole thing queryable at 3am.
+  </p>
+  <div class="bottom-row">
+    <div class="author-info">
+      <div class="author-name">Ignatius Harry</div>
+      <div class="author-role">Data Analyst &amp; Data Engineer · WealthFolio</div>
+    </div>
+    <div class="links">
+      <div class="link-badge">github.com/IgnatiusHarry</div>
+      <div class="link-badge">wealth.ignatiusharry.my.id</div>
+    </div>
+  </div>
+  <div class="slide-num">10 / 10</div>
+</div>
+
+</body>
+</html>

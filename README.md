@@ -35,7 +35,7 @@
 - 🌏 **Multi-currency normalization** — IDR, NTD, USD, SGD all converted in real-time via `fx_history` + `fx_rates`
 - 📊 **Portfolio tracking** with P&L, unrealized gains, and daily snapshots via `compute_portfolio_snapshot()`
 - 🔔 **Automated alerts** when daily spending exceeds budget threshold
-- 🧠 **Quantfolio AI** generates fresh contextual insights daily via provider chain (Copilot → OpenRouter → free models)
+- 🧠 **WealthFolio AI** generates fresh contextual insights daily via provider chain (Copilot → OpenRouter → free models)
 
 ---
 
@@ -126,7 +126,7 @@ Transaction input via Discord:
 
 > Most personal finance apps are generic. WealthFolio is engineered specifically for **financial complexity** — multiple currencies, cross-border investments, and the need for AI that understands behavioral patterns, not just numbers.
 
-1. **Custom AI Prompt Engineering** — "Quantfolio AI" analytical lens rotates daily to prevent repetitive insights
+1. **Custom AI Prompt Engineering** — "WealthFolio AI" analytical lens rotates daily to prevent repetitive insights
 2. **Optimistic UI Updates** — Privacy toggle responds instantly, syncs to server in background (no flicker)
 3. **Smart Data Normalization** — All monetary values stored in IDR base, converted on-the-fly with live FX rates
 4. **Graceful Degradation** — Widget serves cached data instantly while fresh data loads in background
@@ -146,7 +146,7 @@ graph TB
     subgraph AI["🤖 AI Processing Layer"]
         NLP[NLP Parser<br/>GPT-5-mini]
         CLASS[Auto-Classifier<br/>Food · Transport · Rent]
-        PULSE[Financial Pulse<br/>Quantfolio AI]
+        PULSE[Financial Pulse<br/>WealthFolio AI]
     end
 
     subgraph BE["⚙️ Backend API (Next.js)"]

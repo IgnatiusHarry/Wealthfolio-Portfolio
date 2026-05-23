@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080" />
+<title>WealthFolio Engineering Carousel</title>
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+ :root {--bg:#080A0F;--panel:#10131C;--line:rgba(255,255,255,.095);--soft:rgba(255,255,255,.06);--text:#F4F6FB;--muted:rgba(244,246,251,.64);--faint:rgba(244,246,251,.40);--blue:#5B7CFA;--cyan:#31D7C6;--vio:#A077FF;--amber:#F0B85A;--cream:#F4EFE5;--ink:#111318}
+ *{box-sizing:border-box;margin:0;padding:0} body{font-family:Inter,sans-serif;background:#05060A;padding:44px;display:flex;flex-direction:column;align-items:center;gap:36px}
+ .slide{width:1080px;height:1080px;background:var(--bg);color:var(--text);position:relative;padding:70px 76px;overflow:hidden}
+ .cream{background:var(--cream);color:var(--ink)} .topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+ .eyebrow{font:700 12px JetBrains Mono,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+ .num{font:600 12px JetBrains Mono,monospace;color:var(--faint)} h1{font-size:72px;line-height:1.02;letter-spacing:-.045em} h2{font-size:48px;line-height:1.08;letter-spacing:-.04em;margin-bottom:18px}
+ .lead{font-size:21px;line-height:1.55;color:var(--muted);max-width:800px}.brand{position:absolute;left:76px;bottom:46px;font:600 13px JetBrains Mono,monospace;color:var(--faint)}
+ .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.chip{border:1px solid var(--line);padding:8px 12px;border-radius:999px;font:500 12px JetBrains Mono,monospace;color:var(--muted)}
+ .card{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:22px;padding:22px}
+ .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.small{font-size:13px;line-height:1.5;color:var(--muted)} .mono{font-family:JetBrains Mono,monospace}
+ .barWrap{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:10px}.bar{width:50px;background:linear-gradient(180deg,var(--blue),#2f4eb9);border-radius:10px 10px 4px 4px;position:relative}.bar span{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--faint)}
+ .donut{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--blue) 0 40%,var(--cyan) 40% 65%,var(--amber) 65% 84%,var(--vio) 84% 100%)}
+ .legend div{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--soft)}
+ @media print{@page{size:1080px 1080px;margin:0} body{padding:0;gap:0}.slide{page-break-after:always}}
+</style>
+</head>
+<body>
+<section class="slide">
+ <div class="topline"><div class="eyebrow">WealthFolio • Real Project Breakdown</div><div class="num">01 / 06</div></div>
+ <h1>Not just a dashboard.<br><span style="color:var(--blue)">A full finance data system.</span></h1>
+ <p class="lead" style="margin-top:22px">WealthFolio is built around real operational flows: transaction ingestion, FX normalization, portfolio valuation, market refresh, snapshot automation, and AI insight delivery.</p>
+ <div class="chips"><span class="chip">Next.js 14</span><span class="chip">Supabase PostgreSQL</span><span class="chip">Discord Bot</span><span class="chip">GPT-5-mini</span><span class="chip">OpenClaw VPS</span><span class="chip">Vercel Cron</span></div>
+ <div class="brand">@ignatiusharry</div>
+</section>
+
+<section class="slide cream">
+ <div class="topline"><div class="eyebrow">What makes it real</div><div class="num">02 / 06</div></div>
+ <h2>Features mapped to actual WealthFolio pages</h2>
+ <div class="grid2" style="margin-top:14px">
+  <div class="card"><h3>Product Modules</h3><p class="small" style="margin-top:10px">Dashboard, Cashflow, Portfolio, Insights, Assistant, Activities, Goals, Income, Fees, Trading, Health, Wealth Growth, Import/Export, SQL, Settings.</p></div>
+  <div class="card"><h3>Backend Surface</h3><p class="small" style="margin-top:10px">/api/transactions, /api/insert-transaction, /api/portfolio-snapshot, /api/ai-insights, /api/chat, /api/fee-summary, /api/trade-matches, /api/sql (restricted).</p></div>
+  <div class="card"><h3>Data Tables</h3><p class="small" style="margin-top:10px">accounts, transactions, portfolio, investment_assets, market_data, fx_rates, fx_history, portfolio_snapshot, wealth_ledger_daily, ai_insights.</p></div>
+  <div class="card"><h3>Reliability Patterns</h3><p class="small" style="margin-top:10px">FX fallback chain, dedup window, keep-last-good market data, cron secret auth, provider fallback, snapshot mirror for auditability.</p></div>
+ </div>
+ <div class="brand">Aligned 1:1 with github.com/IgnatiusHarry/WealthFolio</div>
+</section>
+
+<section class="slide">
+ <div class="topline"><div class="eyebrow">Pipeline</div><div class="num">03 / 06</div></div>
+ <h2>From user input to financial insight</h2>
+ <div class="card" style="margin-top:20px">
+  <p class="small"><b class="mono">01 Ingest:</b> Discord/Web/CSV input enters API layer.</p>
+  <p class="small"><b class="mono">02 Parse:</b> GPT-5-mini extracts structured transaction fields.</p>
+  <p class="small"><b class="mono">03 Validate:</b> allowlist guards + duplicate checks.</p>
+  <p class="small"><b class="mono">04 Normalize:</b> fx_history → fx_rates → 1.0 fallback; compute amount_idr server-side.</p>
+  <p class="small"><b class="mono">05 Persist:</b> write transactions/accounts and trigger downstream aggregations.</p>
+  <p class="small"><b class="mono">06 Automate:</b> cron + OpenClaw refresh snapshots, insights, market data, FX rates.</p>
+  <p class="small"><b class="mono">07 Output:</b> KPI cards, portfolio charts, AI widget, Discord confirmations.</p>
+ </div>
+ <div class="chips" style="margin-top:16px"><span class="chip">safeTable()</span><span class="chip">safeOrder()</span><span class="chip">compute_portfolio_snapshot</span><span class="chip">provider fallback</span></div>
+ <div class="brand">data-engineering/pipeline.md</div>
+</section>
+
+<section class="slide">
+ <div class="topline"><div class="eyebrow">Analytics</div><div class="num">04 / 06</div></div>
+ <h2>What the user actually sees</h2>
+ <div class="grid2" style="margin-top:14px">
+  <div class="card"><div class="small mono">Monthly cashflow trend (dummy)</div><div class="barWrap"><div class="bar" style="height:68%"><span>Jan</span></div><div class="bar" style="height:52%"><span>Feb</span></div><div class="bar" style="height:74%"><span>Mar</span></div><div class="bar" style="height:88%"><span>Apr</span></div><div class="bar" style="height:82%"><span>May</span></div></div></div>
+  <div class="card"><div class="small mono">Allocation view (dummy)</div><div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center;margin-top:12px"><div class="donut"></div><div class="legend"><div><span>US Equities</span><b>40%</b></div><div><span>IDX</span><b>25%</b></div><div><span>ETF</span><b>19%</b></div><div><span>Cash</span><b>16%</b></div></div></div></div>
+ </div>
+ <div class="grid2" style="margin-top:12px">
+  <div class="card"><div class="small">Net Worth</div><h3 style="margin-top:6px">Rp 248.7M</h3></div>
+  <div class="card"><div class="small">Portfolio Health</div><h3 style="margin-top:6px">82 / 100</h3></div>
+ </div>
+ <div class="brand">analytics/dashboard.md</div>
+</section>
+
+<section class="slide">
+ <div class="topline"><div class="eyebrow">AI Layer</div><div class="num">05 / 06</div></div>
+ <h2>Two pipelines, one financial brain</h2>
+ <div class="grid2" style="margin-top:14px">
+  <div class="card"><h3>Transaction Parser</h3><p class="small" style="margin-top:8px">Turns natural language into validated records (amount, currency, category, date, type, confidence) before insert.</p><p class="small mono" style="margin-top:10px">"makan 85 NTD" → structured JSON</p></div>
+  <div class="card"><h3>WealthFolio Insights</h3><p class="small" style="margin-top:8px">Builds context from accounts + portfolio + transactions + snapshots, then runs provider fallback to generate actionable insight.</p><p class="small mono" style="margin-top:10px">Copilot → OpenRouter → fallback</p></div>
+ </div>
+ <div class="card" style="margin-top:12px"><p class="small"><b>Human touch in design choices:</b> clean typography, restrained color contrast, realistic engineering language, and explicit trade-offs instead of hype copy.</p></div>
+ <div class="brand">ai-pipeline/ai-flow.md</div>
+</section>
+
+<section class="slide cream">
+ <div class="topline"><div class="eyebrow">Closing</div><div class="num">06 / 06</div></div>
+ <h2>What this portfolio communicates</h2>
+ <div class="card" style="background:#fff;border-color:rgba(17,19,24,.12)">
+  <p style="font-size:17px;line-height:1.6;color:rgba(17,19,24,.72)">This project is not positioned as “AI demo”. It is positioned as <b>system engineering</b>: data contracts, operational pipelines, automation jobs, fallback logic, and query-ready analytics that survive real-world noise.</p>
+ </div>
+ <p class="lead" style="color:rgba(17,19,24,.62);margin-top:20px">If needed, this exact deck can be exported to PDF for LinkedIn carousel upload.</p>
+ <div class="brand" style="color:rgba(17,19,24,.45)">github.com/IgnatiusHarry/Wealthfolio-Portfolio</div>
+</section>
+</body>
+</html>
