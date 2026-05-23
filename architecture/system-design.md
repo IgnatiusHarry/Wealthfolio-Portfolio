@@ -95,7 +95,7 @@ graph TB
     end
 
     subgraph Auto["⏱️ Automation Layer"]
-        C1["Vercel Cron"]
+        C1["VPS Cron"]
         C2["OpenClaw VPS Jobs"]
         C3["Market Data Refresh"]
         C4["FX Refresh"]

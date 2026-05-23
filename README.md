@@ -242,7 +242,7 @@ Wealthfolio-Portfolio/
 | **Market Data** | TradingView (IDX), Polygon (US) | Price feeds |
 | **Bot** | Discord Bot API | Transaction input |
 | **Orchestration** | OpenClaw (VPS) | AI routing, market data jobs |
-| **Deploy** | Vercel | CI/CD, cron jobs, edge functions |
+| **Deploy** | VPS + OpenClaw | PM2 + Linux cron + OpenClaw schedulers |
 
 ---
 

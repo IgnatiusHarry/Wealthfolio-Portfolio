@@ -26,7 +26,7 @@ WealthFolio uses **OpenClaw** as an AI orchestration platform deployed on a dedi
 
 ```mermaid
 sequenceDiagram
-    participant Cron as Vercel Cron
+    participant Cron as VPS Cron
     participant OC as OpenClaw (VPS)
     participant TV as TradingView (IDX)
     participant Poly as Polygon (US)
@@ -206,7 +206,7 @@ pm2 startup
 
 ## Advantages of This Architecture
 
-1. **Full Control:** Custom job scheduling beyond Vercel limits
+1. **Full Control:** Custom job scheduling beyond managed hosting limits
 2. **Dual-Source Routing:** Optimized price feeds per market
 3. **Graceful Degradation:** Never lose data on API failures
 4. **Provider Fallback:** Multiple AI providers ensure reliability
